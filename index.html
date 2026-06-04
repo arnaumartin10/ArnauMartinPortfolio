@@ -1268,184 +1268,299 @@
             </div>
     </section>
 
-    <!-- PERSONAL PROJECTS SECTION -->
-    <section id="personal-projects" class="py-28 relative bg-slate-950/20">
-        <div class="max-w-7xl mx-auto px-6 lg:px-10">
+<!-- PERSONAL PROJECTS SECTION -->
+<section id="personal-projects" class="py-28 relative bg-slate-950/20">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
 
-            <div class="fade-up text-center mb-20 space-y-4">
-                <div class="section-label">Independent Development</div>
-                <h2 class="font-display font-extrabold text-4xl lg:text-5xl text-white">
-                    Personal <span class="gradient-text">Creations</span>
-                </h2>
-                <p class="text-slate-400 max-w-2xl mx-auto text-lg">
-                    Projects born out of genuine curiosity, late-night experiments, and a deep passion for understanding
-                    audio mechanics and interactive technology.
-                </p>
+        <div class="fade-up text-center mb-20 space-y-4">
+            <div class="section-label">Research & Development</div>
+            <h2 class="font-display font-extrabold text-4xl lg:text-5xl text-white">
+                Featured <span class="gradient-text">Projects</span>
+            </h2>
+            <p class="text-slate-400 max-w-2xl mx-auto text-lg">
+                From cutting-edge academic research in audio security to interactive tools born out of curiosity for sound mechanics.
+            </p>
+        </div>
+
+        <!-- PRINCIPAL PROJECT: TFG (Full Width Featured Card) -->
+        <div class="card p-0 fade-up overflow-hidden flex flex-col justify-between mb-12 border border-slate-800 bg-slate-900/20 backdrop-blur-sm">
+            <div>
+                <!-- Top Accent Gradient (Premium Academic Cyan to Purple Line) -->
+                <div style="height:4px; background:linear-gradient(90deg, #22d3ee, #818cf8, #a855f7);"></div>
+                
+                <div class="p-8 lg:p-12 space-y-8">
+                    <!-- Header Info -->
+                    <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-6 pb-6 border-b border-slate-800/60">
+                        <div class="flex items-center gap-5">
+                            <div class="p-4 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex-shrink-0">
+                                <i data-lucide="graduation-cap" class="w-8 h-8 text-cyan-400"></i>
+                            </div>
+                            <div>
+                                <div class="font-mono text-xs text-cyan-400 uppercase tracking-wider mb-1">
+                                    Principal Project · Bachelor's Thesis (UPF 2025-2026)
+                                </div>
+                                <h3 class="font-display font-extrabold text-2xl lg:text-3xl text-white leading-tight max-w-3xl">
+                                    Robustness Evaluation of AI-Generated Music Detectors Based on Audio Encoder Features
+                                </h3>
+                                <p class="text-xs text-slate-500 mt-2 font-mono">
+                                    Author: Arnau Martin Riera · Advisor: Martín Rocamora
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- In-depth Technical Breakdown -->
+                    <div class="grid lg:grid-cols-3 gap-8">
+                        
+                        <!-- Left Column: Context & Problem -->
+                        <div class="lg:col-span-2 space-y-6 text-sm leading-relaxed text-slate-400">
+                            <h4 class="text-white font-semibold font-display text-base flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span> Context & Problem Statement
+                            </h4>
+                            <p>
+                                The rise of generative platforms like Suno and Udio enables the creation of high-fidelity songs virtually indistinguishable to the human ear. However, neural codec-based decoders (such as Encodec) leave structural fingerprints: so-called <strong class="text-cyan-400 font-semibold">"fakeprints"</strong>. These artifacts are replicas of upsampling operations and strided deconvolutions within Convolutional Neural Networks (CNNs).
+                            </p>
+                            <p>
+                                While statistical detectors based on linear regressions or shallow models achieve 100% accuracy under laboratory conditions, this research exposes their <strong class="text-slate-200">systemic fragility</strong>. Detectors do not learn the abstract concept of "real music" or "artificial music"; instead, they memorize the metric rigidity and exact placement of spectral peaks unique to each specific generation network.
+                            </p>
+                            
+                            <!-- Mathematical Insight Blockquote -->
+                            <div class="bg-slate-950/40 p-5 rounded-xl border border-slate-800/80 font-mono text-xs text-slate-400 space-y-3">
+                                <div class="text-cyan-400 font-bold font-display text-xs mb-1 uppercase tracking-wider">Mathematical Foundation of the Artifact:</div>
+                                <p>
+                                    In a deconvolution layer with a stride <em>k</em>, the zero-upsampling operation periodizes the spectrum, introducing narrow peaks at equidistant intervals at the following frequencies:
+                                </p>
+                                <p class="text-center text-white py-1.5 text-sm font-sans tracking-wide bg-slate-950/60 rounded-lg border border-slate-900">
+                                    n · f<sub>s</sub> &nbsp;&nbsp;<span class="text-slate-500 text-xs font-mono">for integer bins</span>&nbsp;&nbsp; n ∈ [0, ⌊k/2⌋]
+                                </p>
+                                <p>
+                                    When chaining multiple layers, the maximum number of resulting spectral peaks in the output grows recursively according to the formula:
+                                </p>
+                                <p class="text-center text-white py-1.5 text-sm font-sans tracking-wide bg-slate-950/60 rounded-lg border border-slate-900">
+                                    ⌊P<sub>max</sub>/2⌋ + 1, &nbsp;&nbsp;<span class="text-slate-500 text-xs font-mono">where</span>&nbsp;&nbsp; P<sub>max</sub> = ∏ k<sup>(i)</sup>
+                                </p>
+                                <p>
+                                    This metric signature is canceled out by temporally averaging the Short-Time Fourier Transform (STFT) across thousands of frames, effectively exposing the underlying architecture of the source model.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Right Column: Methodology & Innovative Pipeline -->
+                        <div class="space-y-6">
+                            <h4 class="text-white font-semibold font-display text-base flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span> Multiband Degradation Pipeline
+                            </h4>
+                            <p class="text-sm text-slate-400 leading-relaxed">
+                                As the primary contribution of this thesis, a post-processing pipeline was designed and optimized based on the <strong class="text-indigo-400 font-semibold">Overlap-Add (OLA)</strong> method combined with phase perturbations via millisecond block micro-shifts.
+                            </p>
+                            
+                            <ul class="space-y-3 bg-slate-900/50 p-4 rounded-xl border border-slate-800 text-xs text-slate-400 font-mono">
+                                <li class="flex items-start gap-2">
+                                    <span class="text-indigo-400">▸</span>
+                                    <span><strong>Multiband Decomposition:</strong> The signal is isolated into two distinct bands using a fixed cutoff frequency of 4000 Hz.</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-indigo-400">▸</span>
+                                    <span><strong>Micro-Timing Displacements:</strong> Random, asynchronous phase perturbations are applied exclusively to the mid-high band. This disrupts the rigidity of the temporal spectral grid without compromising musical dynamics.</span>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Results Section -->
+                    <div class="pt-6 border-t border-slate-800/60 grid md:grid-cols-2 lg:grid-cols-4 gap-4 text-center">
+                        <div class="bg-slate-950/30 p-4 rounded-xl border border-slate-800/50">
+                            <div class="font-display font-extrabold text-3xl text-red-400">100% &rarr; 0%</div>
+                            <div class="text-xs text-slate-500 font-mono uppercase tracking-wider mt-1">Detector Accuracy (Suno)</div>
+                        </div>
+                        <div class="bg-slate-950/30 p-4 rounded-xl border border-slate-800/50">
+                            <div class="font-display font-extrabold text-3xl text-red-400">100% &rarr; 4%</div>
+                            <div class="text-xs text-slate-500 font-mono uppercase tracking-wider mt-1">Detector Accuracy (Udio)</div>
+                        </div>
+                        <div class="bg-slate-950/30 p-4 rounded-xl border border-slate-800/50">
+                            <div class="font-display font-extrabold text-3xl text-cyan-400">53.3%</div>
+                            <div class="text-xs text-slate-500 font-mono uppercase tracking-wider mt-1">Human Success (Chance)</div>
+                        </div>
+                        <div class="bg-slate-950/30 p-4 rounded-xl border border-slate-800/50">
+                            <div class="font-display font-extrabold text-3xl text-indigo-400">3.82 / 5</div>
+                            <div class="text-xs text-slate-500 font-mono uppercase tracking-wider mt-1">Human Likert Scale Difficulty</div>
+                        </div>
+                    </div>
+
+                    <p class="text-xs text-slate-500 italic leading-relaxed">
+                        <strong>Research Conclusion:</strong> Results from a perceptual test with a control group of N = 20 listeners conclusively demonstrate that micro-timing alterations and phase decomposition are completely transparent to the human ear. This opens a critical and urgent debate within the music industry regarding the reliability of current spectral-architecture-based detectors against adversarial attacks.
+                    </p>
+                </div>
             </div>
 
-            <div class="grid md:grid-cols-2 gap-8">
-
-                <!-- Personal 01: fixyoursound -->
-                <div class="card p-0 fade-up overflow-hidden flex flex-col justify-between">
-                    <div>
-                        <div style="height:3px;background:linear-gradient(90deg,#fbbf24,#f43f5e);"></div>
-                        <div class="p-8 space-y-6">
-                            <div class="flex items-start justify-between gap-4">
-                                <div class="flex items-center gap-4">
-                                    <div
-                                        class="p-3 rounded-xl bg-amber-400/10 border border-amber-400/20 flex-shrink-0">
-                                        <i data-lucide="sparkles" class="w-6 h-6 text-amber-400"></i>
-                                    </div>
-                                    <div>
-                                        <div class="font-mono text-xs text-amber-400 opacity-50 mb-1">01 / 02 · Side
-                                            Project</div>
-                                        <h3 class="font-display font-extrabold text-2xl text-white leading-tight">
-                                            fixyoursound</h3>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <p class="text-slate-400 text-sm leading-relaxed mb-4">
-                                What started as a lightweight <strong class="text-slate-200">vibe-coding test</strong>
-                                evolved into a powerful, full-stack educational ecosystem engineered to democratize
-                                music theory and audio engineering. Instead of treating AI as a "black-box" automation
-                                system that generates flattened audio files and replaces human creativity, <strong
-                                    class="text-amber-400">fixyoursound</strong> leverages Large Language Models (LLMs)
-                                as an interactive, real-time co-producer and technical mentor. The platform bridges the
-                                gap between creative abstract intent and concrete technical execution, guiding modern
-                                producers through complex sound synthesis, compositional structures, and algorithmic
-                                rhythm analysis directly inside the browser.
-                            </p>
-
-                            <div
-                                class="space-y-4 bg-slate-900/50 p-5 rounded-xl border border-slate-800 text-xs text-slate-400">
-                                <div class="flex flex-col gap-1.5">
-                                    <div class="flex items-center gap-2">
-                                        <span class="text-amber-400 font-bold font-mono text-sm">▸ Sound
-                                            Replicator</span>
-                                    </div>
-                                    <p class="pl-4 leading-relaxed text-slate-400">
-                                        An advanced natural language interface for audio synthesis. Users describe
-                                        complex acoustic textures, vintage synth patches, or specific guitar tones in
-                                        plain English (e.g., "a dark, detuned, low-pass techno bass"). The AI acts as an
-                                        expert engineer, reverse-engineering the text into raw synthesis data—mapping
-                                        out precise oscillator types, envelope shapes (ADSR), LFO modulation routings,
-                                        and dynamic FX chains (filters, saturation, delays). Instead of delivering a
-                                        sample, it renders the sound in real-time using native web audio synthesis and
-                                        provides an explicit, interactive patching guide that explains the physical
-                                        science behind how each parameter shapes the frequency spectrum.
-                                    </p>
-                                </div>
-
-                                <div class="flex flex-col gap-1.5 border-t border-slate-800/60 pt-3">
-                                    <div class="flex items-center gap-2">
-                                        <span class="text-amber-400 font-bold font-mono text-sm">▸ Interactive Beat
-                                            Maker & Chord Architect</span>
-                                    </div>
-                                    <p class="pl-4 leading-relaxed text-slate-400">
-                                        A dynamic compositional tool that translates algorithmic text prompts into
-                                        complete MIDI sequences, functional chord progressions, and intricate drum
-                                        patterns. The system parses structured data configurations to feed a responsive,
-                                        interactive step-sequencer and digital piano visualizer. Every generated groove
-                                        is accompanied by a deep architectural and music theory breakdown, demystifying
-                                        syncopation, polyrhythms, harmonic tension, and modal choices. This teaches
-                                        users exactly why a rhythm works and how it creates cultural 'vibe' and
-                                        movement.
-                                    </p>
-                                </div>
-
-                                <div class="flex flex-col gap-1.5 border-t border-slate-800/60 pt-3">
-                                    <div class="flex items-center gap-2">
-                                        <span class="text-amber-400 font-bold font-mono text-sm">▸ Collaborative
-                                            Real-Time Community</span>
-                                    </div>
-                                    <p class="pl-4 leading-relaxed text-slate-400">
-                                        A secure, full-stack social hub designed to break the isolation of bedroom
-                                        production. Backed by a relational database model (Prisma + Supabase PostgreSQL)
-                                        and integrated session handling (NextAuth), it allows emerging producers to log
-                                        in, share their creative AI prompts, critique structural loop breakdowns, and
-                                        collaboratively build knowledge in real-time.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
+            <!-- Footer Section & Tech Tags -->
+            <div class="p-8 pt-0">
+                <div class="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-slate-800/60">
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="tag">Audio Signal Processing</span>
+                        <span class="tag">Audio Fakeprints</span>
+                        <span class="tag">Overlap-Add (OLA)</span>
+                        <span class="tag">Fourier Theory & STFT</span>
+                        <span class="tag">Psychoacoustics</span>
+                        <span class="tag">Python & FFmpeg</span>
+                        <span class="tag">Adversarial Robustness</span>
                     </div>
-
-                    <div class="p-8 pt-0">
-                        <div
-                            class="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-slate-800/60">
-                            <div class="flex flex-wrap gap-1.5">
-                                <span class="tag">AI/LLMs</span>
-                                <span class="tag">Vibe-Coding</span>
-                                <span class="tag">Next.js 15</span>
-                                <span class="tag">Music Tech</span>
-                                <span class="tag">Web Audio API</span>
-                                <span class="tag">Prisma & Supabase</span>
-                            </div>
-                            <a href="https://fixyoursound.vercel.app/" target="_blank" rel="noopener"
-                                class="btn-cyan px-4 py-2 text-xs inline-flex items-center gap-2"
-                                style="background:#fbbf24;color:#0f172a;">
-                                <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Visit Web
-                            </a>
-                        </div>
-                    </div>
+                    
                 </div>
-                <!-- Personal 02: easySynth -->
-                <div class="card p-0 fade-up overflow-hidden flex flex-col justify-between">
-                    <div>
-                        <div style="height:3px;background:linear-gradient(90deg,#818cf8,#22d3ee);"></div>
-                        <div class="p-8 space-y-6">
-                            <div class="flex items-start justify-between gap-4">
-                                <div class="flex items-center gap-4">
-                                    <div
-                                        class="p-3 rounded-xl bg-indigo-400/10 border border-indigo-400/20 flex-shrink-0">
-                                        <i data-lucide="sliders" class="w-6 h-6 text-indigo-400"></i>
-                                    </div>
-                                    <div>
-                                        <div class="font-mono text-xs text-indigo-400 opacity-50 mb-1">02 / 02 · Audio
-                                            Engineering</div>
-                                        <h3 class="font-display font-extrabold text-2xl text-white leading-tight">
-                                            easySynth</h3>
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="text-slate-400 text-sm leading-relaxed">
-                                Built out of a strong personal drive to fully master synthesis architecture from the
-                                ground up. easySynth is an interactive, web-based compact synthesizer designed to teach
-                                the core mechanics of oscillators, envelopes, and signal flow manipulation in a highly
-                                visual way.
-                            </p>
-                            <div class="bg-slate-900/60 rounded-xl p-4 border border-slate-800 flex items-center gap-3">
-                                <i data-lucide="cable" class="w-5 h-5 text-indigo-400 flex-shrink-0"></i>
-                                <div>
-                                    <div class="text-white text-xs font-display font-semibold">Native MIDI Controller
-                                        Support</div>
-                                    <div class="text-slate-400 text-xs">Allows users to map and plug in real external
-                                        hardware directly into the browser pipeline.</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-8 pt-0">
-                        <div
-                            class="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-slate-800/60">
-                            <div class="flex flex-wrap gap-1.5">
-                                <span class="tag">Web Audio API</span>
-                                <span class="tag">Synthesizers</span>
-                                <span class="tag">MIDI Protocol</span>
-                                <span class="tag">JavaScript</span>
-                            </div>
-                            <a href="https://arnaumartin10.github.io/easySynth/" target="_blank" rel="noopener"
-                                class="btn-cyan px-4 py-2 text-xs inline-flex items-center gap-2">
-                                <i data-lucide="play" class="w-3.5 h-3.5"></i> Open Synth
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </div>
-    </section>
+
+        <!-- SECONDARY PROJECTS GRID -->
+        <div class="grid md:grid-cols-2 gap-8">
+
+            <!-- Personal 01: fixyoursound -->
+            <div class="card p-0 fade-up overflow-hidden flex flex-col justify-between">
+                <div>
+                    <div style="height:3px;background:linear-gradient(90deg,#fbbf24,#f43f5e);"></div>
+                    <div class="p-8 space-y-6">
+                        <div class="flex items-start justify-between gap-4">
+                            <div class="flex items-center gap-4">
+                                <div class="p-3 rounded-xl bg-amber-400/10 border border-amber-400/20 flex-shrink-0">
+                                    <i data-lucide="sparkles" class="w-6 h-6 text-amber-400"></i>
+                                </div>
+                                <div>
+                                    <div class="font-mono text-xs text-amber-400 opacity-50 mb-1">01 / 02 · Side Project</div>
+                                    <h3 class="font-display font-extrabold text-2xl text-white leading-tight">fixyoursound</h3>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                            What started as a lightweight <strong class="text-slate-200">vibe-coding test</strong>
+                            evolved into a powerful, full-stack educational ecosystem engineered to democratize
+                            music theory and audio engineering. Instead of treating AI as a "black-box" automation
+                            system that generates flattened audio files and replaces human creativity, <strong class="text-amber-400">fixyoursound</strong> leverages Large Language Models (LLMs)
+                            as an interactive, real-time co-producer and technical mentor. The platform bridges the
+                            gap between creative abstract intent and concrete technical execution, guiding modern
+                            producers through complex sound synthesis, compositional structures, and algorithmic
+                            rhythm analysis directly inside the browser.
+                        </p>
+
+                        <div class="space-y-4 bg-slate-900/50 p-5 rounded-xl border border-slate-800 text-xs text-slate-400">
+                            <div class="flex flex-col gap-1.5">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-amber-400 font-bold font-mono text-sm">▸ Sound Replicator</span>
+                                </div>
+                                <p class="pl-4 leading-relaxed text-slate-400">
+                                    An advanced natural language interface for audio synthesis. Users describe
+                                    complex acoustic textures, vintage synth patches, or specific guitar tones in
+                                    plain English (e.g., "a dark, detuned, low-pass techno bass"). The AI acts as an
+                                    expert engineer, reverse-engineering the text into raw synthesis data—mapping
+                                    out precise oscillator types, envelope shapes (ADSR), LFO modulation routings,
+                                    and dynamic FX chains (filters, saturation, delays). Instead of delivering a
+                                    sample, it renders the sound in real-time using native web audio synthesis and
+                                    provides an explicit, interactive patching guide that explains the physical
+                                    science behind how each parameter shapes the frequency spectrum.
+                                </p>
+                            </div>
+
+                            <div class="flex flex-col gap-1.5 border-t border-slate-800/60 pt-3">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-amber-400 font-bold font-mono text-sm">▸ Interactive Beat Maker & Chord Architect</span>
+                                </div>
+                                <p class="pl-4 leading-relaxed text-slate-400">
+                                    A dynamic compositional tool that translates algorithmic text prompts into
+                                    complete MIDI sequences, functional chord progressions, and intricate drum
+                                    patterns. The system parses structured data configurations to feed a responsive,
+                                    interactive step-sequencer and digital piano visualizer. Every generated groove
+                                    is accompanied by a deep architectural and music theory breakdown, demystifying
+                                    syncopation, polyrhythms, harmonic tension, and modal choices. This teaches
+                                    users exactly why a rhythm works and how it creates cultural 'vibe' and
+                                    movement.
+                                </p>
+                            </div>
+
+                            <div class="flex flex-col gap-1.5 border-t border-slate-800/60 pt-3">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-amber-400 font-bold font-mono text-sm">▸ Collaborative Real-Time Community</span>
+                                </div>
+                                <p class="pl-4 leading-relaxed text-slate-400">
+                                    A secure, full-stack social hub designed to break the isolation of bedroom
+                                    production. Backed by a relational database model (Prisma + Supabase PostgreSQL)
+                                    and integrated session handling (NextAuth), it allows emerging producers to log
+                                    in, share their creative AI prompts, critique structural loop breakdowns, and
+                                    collaboratively build knowledge in real-time.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-8 pt-0">
+                    <div class="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-slate-800/60">
+                        <div class="flex flex-wrap gap-1.5">
+                            <span class="tag">AI/LLMs</span>
+                            <span class="tag">Vibe-Coding</span>
+                            <span class="tag">Next.js 15</span>
+                            <span class="tag">Music Tech</span>
+                            <span class="tag">Web Audio API</span>
+                            <span class="tag">Prisma & Supabase</span>
+                        </div>
+                        <a href="https://fixyoursound.vercel.app/" target="_blank" rel="noopener"
+                            class="btn-cyan px-4 py-2 text-xs inline-flex items-center gap-2"
+                            style="background:#fbbf24;color:#0f172a;">
+                            <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Visit Web
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Personal 02: easySynth -->
+            <div class="card p-0 fade-up overflow-hidden flex flex-col justify-between">
+                <div>
+                    <div style="height:3px;background:linear-gradient(90deg,#818cf8,#22d3ee);"></div>
+                    <div class="p-8 space-y-6">
+                        <div class="flex items-start justify-between gap-4">
+                            <div class="flex items-center gap-4">
+                                <div class="p-3 rounded-xl bg-indigo-400/10 border border-indigo-400/20 flex-shrink-0">
+                                    <i data-lucide="sliders" class="w-6 h-6 text-indigo-400"></i>
+                                </div>
+                                <div>
+                                    <div class="font-mono text-xs text-indigo-400 opacity-50 mb-1">02 / 02 · Audio Engineering</div>
+                                    <h3 class="font-display font-extrabold text-2xl text-white leading-tight">easySynth</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            Built out of a strong personal drive to fully master synthesis architecture from the
+                            ground up. easySynth is an interactive, web-based compact synthesizer designed to teach
+                            the core mechanics of oscillators, envelopes, and signal flow manipulation in a highly
+                            visual way.
+                        </p>
+                        <div class="bg-slate-900/60 rounded-xl p-4 border border-slate-800 flex items-center gap-3">
+                            <i data-lucide="cable" class="w-5 h-5 text-indigo-400 flex-shrink-0"></i>
+                            <div>
+                                <div class="text-white text-xs font-display font-semibold">Native MIDI Controller Support</div>
+                                <div class="text-slate-400 text-xs">Allows users to map and plug in real external hardware directly into the browser pipeline.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-8 pt-0">
+                    <div class="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-slate-800/60">
+                        <div class="flex flex-wrap gap-1.5">
+                            <span class="tag">Web Audio API</span>
+                            <span class="tag">Synthesizers</span>
+                            <span class="tag">MIDI Protocol</span>
+                            <span class="tag">JavaScript</span>
+                        </div>
+                        <a href="https://arnaumartin10.github.io/easySynth/" target="_blank" rel="noopener"
+                            class="btn-cyan px-4 py-2 text-xs inline-flex items-center gap-2">
+                            <i data-lucide="play" class="w-3.5 h-3.5"></i> Open Synth
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
 
 
     <!-- EXPERIENCE & EDUCATION SECTION -->
