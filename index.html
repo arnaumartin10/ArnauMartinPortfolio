@@ -1,1841 +1,914 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
-
+<html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Arnau Martin Riera — Audiovisual Systems Engineer</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arnau Martin Riera — Audiovisual Systems Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&family=Newsreader:ital@1&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          display: ['"Fraunces"', 'serif'],
+          body: ['"Inter"', 'sans-serif'],
+        },
+      }
+    }
+  }
+</script>
+<style>
+  :root {
+    --paper: #f6f3ec;
+    --paper-raised: #ffffff;
+    --ink: #201d19;
+    --ink-2: #55504a;
+    --ink-3: #8a847b;
+    --line: rgba(32, 29, 25, 0.12);
+    --line-strong: rgba(32, 29, 25, 0.28);
+    --accent: #a8452e;
+    --accent-ink: #fdf6f0;
+    --accent-soft: rgba(168, 69, 46, 0.08);
+    --accent-soft-2: rgba(168, 69, 46, 0.16);
+    --olive: #5c6650;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  html { background: var(--paper); scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', sans-serif;
+    color: var(--ink-2);
+    background: var(--paper);
+    overflow-x: hidden;
+  }
+  .font-display { font-family: 'Fraunces', serif; }
+  .text-ink { color: var(--ink); }
+  .text-ink-2 { color: var(--ink-2); }
+  .text-ink-3 { color: var(--ink-3); }
+  .text-accent { color: var(--accent); }
+  a { color: inherit; }
 
-    <script src="https://cdn.tailwindcss.com"></script>
+  #scroll-progress {
+    position: fixed; top: 0; left: 0; height: 2px;
+    background: var(--accent); width: 0%; z-index: 60;
+    transition: width .1s linear;
+  }
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 2px; }
+  ::selection { background: var(--accent-soft-2); color: var(--ink); }
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@300;400;500&family=Inter:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap"
-        rel="stylesheet" />
+  .panel {
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    transition: border-color .25s ease, transform .25s ease, box-shadow .25s ease;
+  }
+  .panel:hover { border-color: var(--line-strong); }
 
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  .btn {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: .01em;
+    border-radius: 1px;
+    transition: transform .2s ease, background .2s ease, border-color .2s ease, color .2s ease;
+    white-space: nowrap;
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn-primary { background: var(--ink); color: var(--paper); border: 1px solid var(--ink); }
+  .btn-primary:hover { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--line-strong); }
+  .btn-ghost:hover { border-color: var(--ink); }
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'slate-950': '#ffffff',
-                        'slate-925': '#fdfbfd',
-                        'slate-900': '#f8fafc',
-                        'slate-850': '#f1f5f9',
-                        
-                        'white': '#000000',
-                        'black': '#ffffff',
-                        
-                        'slate-500': '#64748b',
-                        'slate-400': '#334155',
-                        'slate-300': '#1e293b',
-                        'slate-200': '#cbd5e1',
-                        'slate-600': '#475569',
-                        'slate-700': '#0f172a',
-                        'slate-800': '#cbd5e1', 
-                        
-                        'cyan-400': '#2f4a63', 
-                        'cyan-300': '#2f4a63', 
-                        'teal-400': '#2f4a63',
-                        'signal': '#2f4a63',
-                        
-                        'indigo-400': '#64748b', 
-                        'indigo-300': '#64748b', 
-                        'rose-400': '#64748b',
-                        'rose-300': '#64748b',
-                        'purple-400': '#64748b',
-                        
-                        'amber-400': '#64748b',
-                        'yellow-400': '#64748b',
-                        'red-400': '#64748b'
-                    },
-                    fontFamily: {
-                        display: [ 'sans-serif'],
-                        mono: ['sans-serif'],
-                        body: ['sans-serif'],
-                    },
-                }
-            }
-        }
-    </script>
+  .eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: .72rem;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .index-num { font-family: 'Inter', sans-serif; font-size: .72rem; color: var(--ink-3); font-variant-numeric: tabular-nums; }
 
-    <style>
-        :root {
-            --bg-card: rgba(255, 255, 255, 0.45);
-            --bg-card-hover: rgba(255, 255, 255, 0.55);
-            --accent: #2f4a63;
-            --accent-soft: rgba(47, 74, 99, 0.10);
-            --graphite: #64748b;
-            --text-primary: #1e293b;
-            --text-muted: #52606d;
-            --border: rgba(148, 163, 184, 0.35);
-            --border-hover: rgba(100, 116, 139, 0.55);
-            --glass-blur: 14px;
-            --glass-shadow: 0 4px 24px rgba(15, 23, 42, 0.06);
-        }
+  .tag {
+    font-family: 'Inter', sans-serif;
+    font-size: .68rem;
+    padding: 3px 10px;
+    border-radius: 1px;
+    background: transparent;
+    border: 1px solid var(--line-strong);
+    color: var(--ink-2);
+  }
 
-        * {
-            box-sizing: border-box;
-        }
+  .bar-track { background: var(--line); height: 2px; }
+  .bar-fill { background: var(--ink); height: 2px; transition: width 1.1s cubic-bezier(.16,1,.3,1); }
+  .group:hover .bar-fill { background: var(--accent); }
 
-        html, body {
-            height: 100%;
-        }
+  .rule { border-top: 1px solid var(--line); }
+  .rule-strong { border-top: 1px solid var(--line-strong); }
 
-        /* ===== FONS: degradat de grisos neutres, molt subtil i quiet ===== */
-        html {
-            background: linear-gradient(160deg, #f4f6f8 0%, #eef1f4 45%, #f6f4f1 100%);
-        }
+  .nav-scrolled { background: rgba(246, 243, 236, 0.92) !important; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+  .nav-link { position: relative; }
+  .nav-link::after { content: ''; position: absolute; left: 0; bottom: -6px; height: 1px; width: 0; background: var(--accent); transition: width .25s ease; }
+  .nav-link.active { color: var(--ink) !important; }
+  .nav-link.active::after { width: 100%; }
 
-        html::before {
-            content: '';
-            position: fixed;
-            inset: -18%;
-            z-index: -2;
-            background:
-                radial-gradient(circle at 20% 20%, rgba(47, 74, 99, 0.10) 0%, transparent 45%),
-                radial-gradient(circle at 80% 25%, rgba(100, 116, 139, 0.09) 0%, transparent 45%),
-                radial-gradient(circle at 30% 85%, rgba(47, 74, 99, 0.07) 0%, transparent 50%);
-            filter: blur(100px);
-            animation: driftSlow 40s ease-in-out infinite;
-            pointer-events: none;
-        }
+  #mobile-menu { transition: max-height .4s ease, opacity .4s ease; max-height: 0; overflow: hidden; opacity: 0; }
+  #mobile-menu.open { max-height: 420px; opacity: 1; }
 
-        html::after {
-            content: '';
-            position: fixed;
-            inset: 0;
-            z-index: -1;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.65));
-            pointer-events: none;
-        }
+  .fade-up { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+  .delay-100 { transition-delay: .05s; }
+  .delay-200 { transition-delay: .1s; }
+  .delay-300 { transition-delay: .15s; }
+  .delay-400 { transition-delay: .2s; }
+  .delay-500 { transition-delay: .25s; }
+  .delay-600 { transition-delay: .3s; }
 
-        @keyframes driftSlow {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(-2%, 2%) scale(1.04); }
-        }
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+    outline: 1.5px solid var(--accent); outline-offset: 2px;
+  }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            color: var(--text-primary);
-            overflow-x: hidden;
-            background: transparent;
-        }
+  .input-field {
+    width: 100%;
+    background: var(--paper-raised);
+    border: 1px solid var(--line-strong);
+    color: var(--ink);
+    border-radius: 1px;
+    padding: 12px 14px;
+    font-family: 'Inter', sans-serif;
+    font-size: .9rem;
+    outline: none;
+    transition: border-color .2s;
+  }
+  .input-field:focus { border-color: var(--accent); }
+  .input-field::placeholder { color: var(--ink-3); }
 
-        ::-webkit-scrollbar {
-            width: 4px;
-        }
+  /* Hero: quiet editorial mark instead of neon waveform */
+  #hero { position: relative; }
+  .hero-mark {
+    position: absolute;
+    right: -2vw;
+    top: -4vw;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: min(38vw, 420px);
+    line-height: .8;
+    color: var(--ink);
+    opacity: .04;
+    pointer-events: none;
+    z-index: 0;
+    user-select: none;
+  }
+  #hero > * { position: relative; z-index: 1; }
 
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
+  /* Project slider */
+  #proj-track { scrollbar-width: none; -ms-overflow-style: none; scroll-behavior: smooth; }
+  #proj-track::-webkit-scrollbar { display: none; }
+  .slide-card { scroll-snap-align: start; transition: transform .3s ease, border-color .3s ease; }
+  .slide-card:hover { transform: translateY(-3px); border-color: var(--line-strong); }
+  .proj-dot { width: 6px; height: 6px; border-radius: 999px; background: var(--line-strong); transition: all .3s ease; cursor: pointer; }
+  .proj-dot.active { width: 20px; border-radius: 3px; background: var(--accent); }
 
-        ::-webkit-scrollbar-thumb {
-            background: var(--graphite);
-            border-radius: 2px;
-        }
+  .flagship-frame { box-shadow: 0 1px 0 var(--line-strong), 0 24px 60px -32px rgba(32,29,25,.18); }
 
-        ::selection {
-            background: rgba(47, 74, 99, 0.15);
-        }
+  .icon-link {
+    width: 42px; height: 42px; border-radius: 999px;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--line-strong); color: var(--ink);
+    transition: border-color .2s ease, color .2s ease, background .2s ease;
+  }
+  .icon-link:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
 
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.015'/%3E%3C/svg%3E");
-            pointer-events: none;
-            z-index: 9999;
-            opacity: .15;
-        }
+  #toast {
+    position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 16px);
+    opacity: 0; pointer-events: none; transition: opacity .3s ease, transform .3s ease;
+    z-index: 70;
+  }
+  #toast.show { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
 
-        .bg-mesh {
-            background: transparent;
-        }
-
-        .scanlines {
-            background: none;
-        }
-
-        .font-display {
-            font-family: 'Space Grotesk', sans-serif;
-        }
-
-        .font-mono {
-            font-family: 'JetBrains Mono', monospace;
-        }
-
-        .text-glow {
-            color: var(--accent);
-        }
-
-        .text-signal {
-            color: var(--accent);
-        }
-
-        .gradient-text {
-            color: var(--accent);
-        }
-
-        /* ===== Vidre discret: fons translúcid neutre, vores fines, ombres suaus ===== */
-        .card {
-            background: var(--bg-card);
-            backdrop-filter: blur(var(--glass-blur));
-            -webkit-backdrop-filter: blur(var(--glass-blur));
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            box-shadow: var(--glass-shadow);
-            transition: border-color .25s ease, box-shadow .25s ease, background .25s ease;
-        }
-
-        .card:hover {
-            background: var(--bg-card-hover);
-            border-color: var(--border-hover);
-            box-shadow: 0 8px 28px rgba(15, 23, 42, 0.09);
-        }
-
-        .btn-cyan {
-            background: var(--accent);
-            color: #ffffff;
-            font-family: 'Space Grotesk', sans-serif;
-            font-weight: 600;
-            letter-spacing: .01em;
-            border-radius: 8px;
-            border: 1px solid var(--accent);
-            transition: background .25s ease, transform .2s ease;
-        }
-
-        .btn-cyan:hover {
-            background: #253d53;
-            transform: translateY(-1px);
-        }
-
-        .btn-ghost {
-            background: rgba(255, 255, 255, 0.35);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid var(--border);
-            color: #1e293b;
-            font-family: 'Space Grotesk', sans-serif;
-            font-weight: 500;
-            letter-spacing: .01em;
-            border-radius: 8px;
-            transition: border-color .25s, background .25s, transform .2s;
-        }
-
-        .btn-ghost:hover {
-            background: rgba(255, 255, 255, 0.55);
-            border-color: var(--border-hover);
-            transform: translateY(-1px);
-        }
-
-        .pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 4px 12px;
-            border-radius: 999px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: .7rem;
-            font-weight: 500;
-            background: rgba(255, 255, 255, 0.45);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            color: var(--accent);
-            border: 1px solid var(--border);
-        }
-
-        .section-label {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: .68rem;
-            letter-spacing: .15em;
-            text-transform: uppercase;
-            color: var(--text-muted);
-        }
-
-        .divider {
-            border-color: var(--border);
-        }
-
-        .nav-scrolled {
-            background: rgba(255, 255, 255, 0.55) !important;
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid var(--border);
-        }
-
-        .wave-bar {
-            display: inline-block;
-            width: 3px;
-            background: var(--graphite);
-            border-radius: 2px;
-            transform-origin: bottom;
-        }
-
-        .osc-path {
-            stroke-dasharray: 400;
-            stroke-dashoffset: 0;
-        }
-
-        .ping-dot::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 50%;
-            background: transparent;
-        }
-
-        .fade-up {
-            opacity: 0;
-            transform: translateY(24px);
-            transition: opacity .6s ease, transform .6s ease;
-        }
-
-        .fade-up.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .proj-placeholder {
-            background: rgba(255, 255, 255, 0.35);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .proj-placeholder::after {
-            content: none;
-        }
-
-        .tag {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: .65rem;
-            padding: 3px 9px;
-            border-radius: 4px;
-            background: rgba(255, 255, 255, 0.45);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            color: var(--text-muted);
-            border: 1px solid var(--border);
-        }
-
-        .bar-track {
-            background: rgba(148, 163, 184, 0.25);
-            border-radius: 999px;
-            height: 4px;
-        }
-
-        .bar-fill {
-            background: var(--accent);
-            border-radius: 999px;
-            height: 4px;
-            transition: width 1.2s ease;
-        }
-
-        .input-field {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid var(--border);
-            color: #1e293b;
-            border-radius: 8px;
-            padding: 12px 16px;
-            font-family: 'Inter', sans-serif;
-            outline: none;
-            transition: border-color .25s, background .25s;
-        }
-
-        .input-field:focus {
-            background: rgba(255, 255, 255, 0.6);
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px var(--accent-soft);
-        }
-
-        .input-field::placeholder {
-            color: #94a3b8;
-        }
-
-        .cert-badge {
-            background: transparent;
-            border: none;
-            border-bottom: 1px solid var(--border);
-            border-radius: 0;
-            transition: border-color .25s, background .25s;
-        }
-
-        .cert-badge:hover {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: var(--border-hover);
-        }
-
-        #mobile-menu {
-            transition: max-height .4s ease, opacity .4s ease;
-            max-height: 0;
-            overflow: hidden;
-            opacity: 0;
-        }
-
-        #mobile-menu.open {
-            max-height: 400px;
-            opacity: 1;
-        }
-
-        .delay-100 { transition-delay: .05s; }
-        .delay-200 { transition-delay: .1s; }
-        .delay-300 { transition-delay: .15s; }
-        .delay-400 { transition-delay: .2s; }
-        .delay-500 { transition-delay: .25s; }
-        .delay-600 { transition-delay: .3s; }
-    </style>
+  @media (prefers-reduced-motion: reduce) {
+    .fade-up { opacity: 1 !important; transform: none !important; transition: none !important; }
+    .bar-fill { transition: none !important; }
+    .slide-card { transition: none !important; }
+  }
+</style>
 </head>
+<body>
 
-<body class="bg-mesh antialiased">
+<div id="scroll-progress"></div>
+<div id="toast" class="panel px-5 py-3 text-sm text-ink font-body"></div>
 
-    <!-- NAVBAR -->
-    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-6 lg:px-10 h-16 flex items-center justify-between">
-            <a href="#hero" class="font-display font-800 text-lg tracking-tight flex items-center gap-2">
-                <span class="text-glow font-mono text-base">&lt;</span>
-                <span class="font-display font-extrabold text-slate-700">Arnau</span><span class="text-glow">·</span><span
-                    class="font-display font-extrabold text-slate-700">Martin</span>
-                <span class="text-glow font-mono text-base">/&gt;</span>
-            </a>
+<!-- NAV -->
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-colors duration-300">
+  <div class="max-w-6xl mx-auto px-6 md:px-10 flex items-center justify-between h-16">
+    <a href="#hero" class="font-display italic text-lg text-ink">Arnau Martin</a>
+    <div class="hidden md:flex items-center gap-8 text-sm text-ink-2">
+      <a href="#skills" data-section="skills" class="nav-link hover:text-ink transition-colors">Skills</a>
+      <a href="#personal-projects" data-section="personal-projects" class="nav-link hover:text-ink transition-colors">Projects</a>
+      <a href="#experience" data-section="experience" class="nav-link hover:text-ink transition-colors">Experience</a>
+      <a href="#contact" class="btn btn-ghost px-4 py-2">Contact</a>
+    </div>
+    <button id="menu-toggle" class="md:hidden text-ink w-9 h-9 flex items-center justify-center border border-current rounded-sm" aria-label="Toggle menu">
+      <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><path d="M0 1h16M0 6h16M0 11h16" stroke="currentColor"/></svg>
+    </button>
+  </div>
+  <div id="mobile-menu" class="md:hidden px-6 pb-4 flex flex-col gap-4 text-sm text-ink-2 bg-[var(--paper)] border-b border-[var(--line)]">
+    <a href="#skills">Skills</a>
+    <a href="#personal-projects">Projects</a>
+    <a href="#experience">Experience</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
 
-            <div class="hidden md:flex items-center gap-8 text-sm font-display font-600">
-                <a href="#skills" class="text-slate-600 hover:text-cyan-300 transition-colors">Skills</a>
-                <a href="#academic-projects" class="text-slate-600 hover:text-cyan-300 transition-colors">Projects</a>
-                <a href="#experience" class="text-slate-600 hover:text-cyan-300 transition-colors">Experience</a>
-                <a href="#contact" class="btn-cyan px-5 py-2 text-sm">Contact</a>
-            </div>
+<!-- HERO -->
+<section id="hero" class="min-h-screen flex items-center pt-16">
+  <div class="max-w-6xl mx-auto px-6 md:px-10 w-full py-20">
+    <div class="flex items-center gap-3 mb-8 fade-up visible">
+      <span class="w-1.5 h-1.5 rounded-full bg-[var(--olive)]"></span>
+      <span class="eyebrow">Open to new opportunities</span>
+    </div>
+    <p class="font-display italic text-ink-3 text-lg mb-2 fade-up visible delay-100">Audiovisual Systems Engineer</p>
+    <h1 class="font-display text-ink text-6xl md:text-8xl leading-[0.95] mb-8 fade-up visible delay-200">
+      Arnau<br>Martin Riera
+    </h1>
+    <div class="flex flex-wrap items-center gap-3 mb-10 fade-up visible delay-300">
+      <span class="tag">UPF · Barcelona</span>
+      <span class="tag">Audiovisual Systems Graduate</span>
+      <span class="tag" style="border-color: var(--accent); color: var(--accent);">Open to work</span>
+    </div>
+    <p class="max-w-xl text-ink-2 text-[1.05rem] leading-relaxed mb-10 fade-up visible delay-400">
+      I've recently graduated in Audiovisual Systems Engineering from UPF, with a background that sits between audio, video and software. I like understanding how things work under the hood, and I'm looking for a team where I can keep doing that on real projects.
+    </p>
+    <div class="fade-up visible delay-500">
+      <div class="flex flex-wrap gap-4 mb-3">
+        <a href="cv/Arnau_Martin_CV.pdf" download class="btn px-7 py-3.5 flex items-center gap-2" style="background: var(--accent); color: var(--accent-ink); border: 1px solid var(--accent);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 3v13m0 0l-5-5m5 5l5-5M4 21h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Download CV
+        </a>
+        <a href="#personal-projects" class="btn btn-ghost px-6 py-3.5">View Projects</a>
+      </div>
+      <p class="text-xs text-ink-3">A one-page summary of everything on this site, including education, experience and skills.</p>
+    </div>
+  </div>
+</section>
 
-            <button id="menu-toggle" class="md:hidden text-slate-600 hover:text-cyan-300" aria-label="Menu">
-                <i data-lucide="menu" class="w-5 h-5"></i>
-            </button>
+<!-- ABOUT -->
+<section id="about" class="max-w-6xl mx-auto px-6 md:px-10 py-24 md:py-32">
+  <div class="grid md:grid-cols-12 gap-x-12 gap-y-10">
+
+    <!-- left: portrait + facts, editorial sidebar -->
+    <div class="md:col-span-4 fade-up">
+      <div class="flagship-frame overflow-hidden mb-8">
+        <img src="images/26_21_200_A_002_Orla.png" alt="Arnau Martin Riera" class="w-full h-auto grayscale-[15%] contrast-[1.02]">
+      </div>
+      <dl class="rule pt-6 space-y-5 font-body text-sm">
+        <div class="flex justify-between items-baseline">
+          <dt class="text-ink-3">Based in</dt>
+          <dd class="text-ink font-medium">Barcelona, Catalunya</dd>
+        </div>
+        <div class="flex justify-between items-baseline">
+          <dt class="text-ink-3">Education</dt>
+          <dd class="text-ink font-medium">UPF, 4th year</dd>
+        </div>
+        <div class="flex justify-between items-baseline">
+          <dt class="text-ink-3">Currently</dt>
+          <dd class="text-ink font-medium">Junior Analyst, Avanade</dd>
+        </div>
+        <div class="flex justify-between items-baseline">
+          <dt class="text-ink-3">Languages</dt>
+          <dd class="text-ink font-medium">CAT · ES · EN (C1)</dd>
+        </div>
+      </dl>
+    </div>
+
+    <!-- right: bio as running prose, not stat cards -->
+    <div class="md:col-span-8 fade-up delay-100">
+      <p class="eyebrow mb-4">About</p>
+      <h2 class="font-display text-ink text-4xl md:text-5xl leading-tight mb-10">
+        Arnau Martin Riera<br>Audiovisual Systems Engineer
+      </h2>
+
+      <div class="space-y-6 text-[1.05rem] leading-relaxed text-ink-2 max-w-2xl">
+        <p>
+          I've recently graduated in Audiovisual Systems Engineering at UPF, a degree that mixes signal processing, video engineering, and software. I like both sides of it: the math behind a codec or an audio filter, and the more practical question of whether a mix or a shot actually sounds or looks right.
+        </p>
+        <p>
+          My thesis looks at how AI-generated music can be identified from the traces neural codecs leave behind, and how fragile those detection methods are once you try to attack them. I spent a year building a pipeline that defeats them without changing how the music sounds to a human listener. Alongside that, I've worked on computer vision, video processing, and, currently, Microsoft workplace tooling at Avanade, where I support internal systems used by international clients.
+        </p>
+        <p>
+          Outside of coursework I play guitar, produce music, watch a lot of film, and still play basketball, something I've done since I was six.
+        </p>
+      </div>
+
+      <div class="mt-10 pt-8 rule flex flex-wrap gap-x-10 gap-y-4">
+        <div>
+          <p class="font-display text-2xl text-ink">4</p>
+          <p class="text-xs text-ink-3 uppercase tracking-wide mt-1">Years at UPF</p>
         </div>
 
-        <div id="mobile-menu" class="md:hidden bg-white/25 backdrop-blur-xl border-t border-white/40">
-            <div class="flex flex-col px-6 py-4 gap-4 text-sm font-display font-600">
-                <a href="#skills" class="text-slate-600 hover:text-cyan-300">Skills</a>
-                <a href="#academic-projects" class="text-slate-600 hover:text-cyan-300">Projects</a>
-                <a href="#experience" class="text-slate-600 hover:text-cyan-300">Experience</a>
-                <a href="#contact" class="btn-cyan px-5 py-2 text-sm text-center">Contact</a>
-            </div>
+        <div>
+          <p class="font-display text-2xl text-ink">3</p>
+          <p class="text-xs text-ink-3 uppercase tracking-wide mt-1">Languages spoken</p>
         </div>
-    </nav>
-
-
-    <!-- HERO SECTION -->
-    <section id="hero" class="min-h-screen flex items-center pt-16 relative overflow-hidden scanlines">
-        <div class="absolute inset-0 opacity-20"
-            style="background-image: linear-gradient(rgba(47, 74, 99, 0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(47, 74, 99, 0.06) 1px, transparent 1px); background-size: 60px 60px;">
+        <div>
+          <p class="font-display text-2xl text-ink">1</p>
+          <p class="text-xs text-ink-3 uppercase tracking-wide mt-1">Bachelor's thesis</p>
         </div>
-
-        <div class="absolute top-1/4 -left-40 w-96 h-96 rounded-full"
-            style="background: radial-gradient(circle, rgba(47, 74, 99, 0.12) 0%, transparent 70%);"></div>
-        <div class="absolute bottom-1/4 -right-40 w-96 h-96 rounded-full"
-            style="background: radial-gradient(circle, rgba(100, 116, 139, 0.1) 0%, transparent 70%);"></div>
-
-        <div class="max-w-7xl mx-auto px-6 lg:px-10 w-full py-24">
-            <div class="grid lg:grid-cols-2 gap-16 items-center">
-
-                <div class="space-y-8">
-                    <div
-                        class="fade-up delay-100 inline-flex items-center gap-3 px-4 py-2 rounded-full border border-cyan-400/20 bg-cyan-400/5 text-xs font-mono text-cyan-300">
-                        <span class="relative w-2 h-2 rounded-full bg-signal ping-dot"></span>
-                        Open to new opportunities
-                    </div>
-
-                    <div class="fade-up delay-200 space-y-2">
-                        <div class="section-label mb-3">Audiovisual Systems Engineer</div>
-                        <h1 class="font-display text-5xl lg:text-7xl font-extrabold leading-none tracking-tight">
-                            <span class="text-slate-700">Arnau</span><br>
-                            <span class="gradient-text">Martin</span>
-                        </h1>
-                    </div>
-
-                    <p class="fade-up delay-300 text-slate-600 text-lg leading-relaxed max-w-xl font-body">
-                        As an Audiovisual Systems Engineering graduate from UPF, I am driven by a constant eagerness to
-                        learn and grow. Ready to bring my energy and technical background into exciting real-world
-                        productions and projects. Passionate about technology, audio and video.
-                    </p>
-
-                    <div class="fade-up delay-400 flex flex-wrap gap-4">
-                        <a href="#academic-projects" class="btn-cyan px-7 py-3 inline-flex items-center gap-2">
-                            <i data-lucide="folder-open" class="w-4 h-4"></i>
-                            View Projects
-                        </a>
-                        <a href="cv/Arnau_Martin_CV.pdf" download
-                            class="btn-ghost px-7 py-3 inline-flex items-center gap-2">
-                            <i data-lucide="download" class="w-4 h-4"></i>
-                            Download CV
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Right: Photo + About Me -->
-                <div class="fade-up delay-600 relative hidden lg:flex flex-col gap-6">
-                    <!-- Photo card -->
-                    <div class="card p-6 flex items-center gap-6">
-                        <div class="relative flex-shrink-0">
-                            <div class="w-28 h-28 rounded-2xl overflow-hidden border-2 border-cyan-400/30 flex items-center justify-center"
-                                style="box-shadow: 0 0 30px rgba(47, 74, 99, 0.15); background: linear-gradient(135deg, rgba(47, 74, 99, 0.12), rgba(100, 116, 139, 0.12));">
-                                <img src="images/26_21_200_A_002_Orla.png" alt="Arnau"
-                                    class="w-full h-full object-cover">
-                            </div>
-                            <div
-                                class="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-white border-2 border-signal flex items-center justify-center">
-                                <span class="w-2 h-2 rounded-full bg-signal animate-pulse"></span>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="font-display font-extrabold text-slate-700 text-xl leading-tight">Arnau Martin</div>
-                            <div class="text-cyan-300 font-mono text-xs mt-1">Audiovisual Systems Eng.</div>
-                            <div class="text-slate-500 font-mono text-xs mt-1">UPF · Barcelona</div>
-                            <div class="flex gap-2 mt-3">
-                                <span class="pill text-xs">Audiovisual Systems Graduate</span>
-                                <span class="pill text-xs"
-                                    style="background:rgba(47, 74, 99, 0.08);color:#2f4a63;border-color:rgba(47, 74, 99, 0.2)">Open
-                                    to work</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- About Me card -->
-                    <div class="card p-7 space-y-4">
-                        <div class="section-label">About me</div>
-                        <p class="text-slate-600 text-sm leading-relaxed">
-                            I have always had a curious and restless mindset, especially when it comes to the
-                            audiovisual world, technology and creativity. This curiosity led me to pursue a degree in
-                            Audiovisual Systems Engineering, with the goal of combining a creative vision with a strong
-                            technical and engineering background.
-                        </p>
-                        <p class="text-slate-500 text-sm leading-relaxed">
-                            Alongside my technical training, music and cinema have always played a central role in my
-                            life. I am deeply passionate about both fields and enjoy composing music in my free time —
-                            bridging the technical and the artistic sides of the audiovisual world.
-                        </p>
-                        <div class="grid grid-cols-3 gap-3 pt-2 border-t border-slate-200 text-center">
-                            <div>
-                                <div class="font-display font-extrabold text-xl text-glow">4th</div>
-                                <div class="text-xs text-slate-500 font-mono mt-1">Year UPF</div>
-                            </div>
-                            <div>
-                                <div class="font-display font-extrabold text-xl gradient-text">Junior</div>
-                                <div class="text-xs text-slate-500 font-mono mt-1">Professional level</div>
-                            </div>
-                            <div>
-                                <div class="font-display font-extrabold text-xl text-slate-700">5+</div>
-                                <div class="text-xs text-slate-500 font-mono mt-1">Languages</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-
-    <!-- SKILLS SECTION -->
-    <section id="skills" class="py-28 relative">
-        <div class="max-w-7xl mx-auto px-6 lg:px-10">
-
-            <div class="fade-up text-center mb-20 space-y-4">
-                <div class="section-label">Technical competencies</div>
-                <h2 class="font-display font-extrabold text-4xl lg:text-5xl text-slate-700">
-                    Areas of <span class="gradient-text">Expertise</span>
-                </h2>
-                <p class="text-slate-500 max-w-2xl mx-auto text-lg">
-                    From audiovisual signal processing and audio production tools to modern software development.
-                </p>
-            </div>
-
-            <div class="space-y-0">
-
-                <!-- BLOC 1: Software Development -->
-                <div class="fade-up space-y-6 py-10 border-t border-slate-200/70">
-                    <div class="flex items-start gap-4">
-                        <div class="p-3 rounded-xl bg-cyan-400/10 border border-cyan-400/20 flex-shrink-0">
-                            <i data-lucide="code-2" class="w-6 h-6 text-cyan-300"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-display font-bold text-xl text-slate-700 mb-1">Software Development</h3>
-                            <p class="text-slate-500 text-sm leading-relaxed">Building digital tools and internal
-                                solutions using modern languages and frameworks. Recently applying these skills
-                                at uni projects about signal processing and video coding. </p>
-                        </div>
-                    </div>
-                    <div class="space-y-3">
-                        <div class="flex justify-between text-xs font-mono text-slate-500 mb-1"><span>Python</span><span
-                                class="text-signal">85%</span></div>
-                        <div class="bar-track">
-                            <div class="bar-fill" style="width:85%"></div>
-                        </div>
-                        <div class="flex justify-between text-xs font-mono text-slate-500 mb-1"><span>C / C#</span><span
-                                class="text-signal">70%</span></div>
-                        <div class="bar-track">
-                            <div class="bar-fill" style="width:70%"></div>
-                        </div>
-                        <div class="flex justify-between text-xs font-mono text-slate-500 mb-1"><span>C++</span><span
-                                class="text-cyan-300">60%</span></div>
-                        <div class="bar-track">
-                            <div class="bar-fill" style="width:60%"></div>
-                        </div>
-                        <div class="flex justify-between text-xs font-mono text-slate-500 mb-1"><span>Java</span><span
-                                class="text-cyan-300">75%</span></div>
-                        <div class="bar-track">
-                            <div class="bar-fill" style="width:75%"></div>
-                        </div>
-                        <div class="flex justify-between text-xs font-mono text-slate-500 mb-1">
-                            <span>JavaScript/Typescript</span><span class="text-signal">50%</span>
-                        </div>
-                        <div class="bar-track">
-                            <div class="bar-fill" style="width:50%"></div>
-                        </div>
-                    </div>
-                    <div class="flex flex-wrap gap-2 pt-2 border-t border-slate-200">
-                        <span class="pill">Python</span>
-                        <span class="pill">C/C#</span>
-                        <span class="pill">C++</span>
-                        <span class="pill">Java</span>
-                        <span class="pill">JavaScript/Typescript</span>
-                    </div>
-                </div>
-
-                <!-- BLOC 2: Audio Systems & DSP -->
-                <div class="fade-up space-y-6 py-10 border-t border-slate-200/70">
-                    <div class="flex items-start gap-4">
-                        <div class="p-3 rounded-xl bg-indigo-400/10 border border-indigo-400/20 flex-shrink-0">
-                            <i data-lucide="audio-waveform" class="w-6 h-6 text-indigo-300"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-display font-bold text-xl text-slate-700 mb-1">Audio Systems & DSP</h3>
-                            <p class="text-slate-500 text-sm leading-relaxed">Solid understanding of professional audio
-                                equipment, signal routing, and electroacoustics. Skilled in core signal processing
-                                theory, modern audio coding standards, and acoustic measurement tools alongside creative
-                                DAW environments.</p>
-                        </div>
-                    </div>
-                    <div class="space-y-3">
-                        <div class="flex justify-between text-xs font-mono text-slate-500 mb-1"><span>Signal Processing
-                                & Acoustic Theory</span><span class="text-indigo-300">90%</span></div>
-                        <div class="bar-track">
-                            <div class="bar-fill"
-                                style="width:90%; background: var(--accent);"></div>
-                        </div>
-                        <div class="flex justify-between text-xs font-mono text-slate-500 mb-1"><span>Audio Coding &
-                                Codecs</span><span class="text-indigo-300">80%</span></div>
-                        <div class="bar-track">
-                            <div class="bar-fill"
-                                style="width:80%; background: var(--accent);"></div>
-                        </div>
-                        <div class="flex justify-between text-xs font-mono text-slate-500 mb-1"><span>Audio Equipment &
-                                Systems</span><span class="text-indigo-300">85%</span></div>
-                        <div class="bar-track">
-                            <div class="bar-fill"
-                                style="width:85%; background: var(--accent);"></div>
-                        </div>
-                        <div class="flex justify-between text-xs font-mono text-slate-500 mb-1"><span>Logic Pro & Reaper
-                                (DAWs)</span><span class="text-indigo-300">85%</span></div>
-                        <div class="bar-track">
-                            <div class="bar-fill"
-                                style="width:85%; background: var(--accent);"></div>
-                        </div>
-                        <div class="flex justify-between text-xs font-mono text-slate-500 mb-1"><span>REW (Room EQ
-                                Wizard)</span><span class="text-indigo-300">70%</span></div>
-                        <div class="bar-track">
-                            <div class="bar-fill"
-                                style="width:70%; background: var(--accent);"></div>
-                        </div>
-                    </div>
-                    <div class="flex flex-wrap gap-2 pt-2 border-t border-slate-200">
-                        <span class="pill">DSP</span>
-                        <span class="pill">Audio Coding</span>
-                        <span class="pill">Audio Systems</span>
-                        <span class="pill">Acoustics</span>
-                        <span class="pill">Logic Pro / Reaper</span>
-                    </div>
-                </div>
-
-                <!-- BLOC 3: Video Systems & Computer Vision -->
-                <div class="fade-up space-y-6 py-10 border-t border-slate-200/70">
-                    <div class="flex items-start gap-4">
-                        <div class="p-3 rounded-xl bg-rose-400/10 border border-rose-400/20 flex-shrink-0">
-                            <i data-lucide="video" class="w-6 h-6 text-rose-300"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-display font-bold text-xl text-slate-700 mb-1">Video Systems & Computer Vision
-                            </h3>
-                            <p class="text-slate-500 text-sm leading-relaxed">Comprehensive knowledge of video
-                                equipment, compression standards, and processing pipeline engineering. Experienced in
-                                computer vision algorithms, image manipulation, and advanced 3D computer graphics
-                                generation.</p>
-                        </div>
-                    </div>
-                    <div class="space-y-3">
-                        <div class="flex justify-between text-xs font-mono text-slate-500 mb-1"><span>FFmpeg & Video
-                                Processing</span><span class="text-rose-300">85%</span></div>
-                        <div class="bar-track">
-                            <div class="bar-fill"
-                                style="width:85%; background: var(--accent);"></div>
-                        </div>
-                        <div class="flex justify-between text-xs font-mono text-slate-500 mb-1"><span>Video Coding &
-                                Codecs (Compression)</span><span class="text-rose-300">80%</span></div>
-                        <div class="bar-track">
-                            <div class="bar-fill"
-                                style="width:80%; background: var(--accent);"></div>
-                        </div>
-                        <div class="flex justify-between text-xs font-mono text-slate-500 mb-1"><span>Computer Vision &
-                                Image Segmentation</span><span class="text-rose-300">75%</span></div>
-                        <div class="bar-track">
-                            <div class="bar-fill"
-                                style="width:75%; background: var(--accent);"></div>
-                        </div>
-                        <div class="flex justify-between text-xs font-mono text-slate-500 mb-1"><span>Computer Graphics
-                                (Ray/Path Tracing/Volume Rendering)</span><span class="text-rose-300">70%</span></div>
-                        <div class="bar-track">
-                            <div class="bar-fill"
-                                style="width:70%; background: var(--accent);"></div>
-                        </div>
-                        <div class="flex justify-between text-xs font-mono text-slate-500 mb-1"><span>Video Equipment &
-                                Systems</span><span class="text-rose-300">75%</span></div>
-                        <div class="bar-track">
-                            <div class="bar-fill"
-                                style="width:75%; background: var(--accent);"></div>
-                        </div>
-                    </div>
-                    <div class="flex flex-wrap gap-2 pt-2 border-t border-slate-200">
-                        <span class="pill">FFmpeg</span>
-                        <span class="pill">Video Coding</span>
-                        <span class="pill">Segmentation</span>
-                        <span class="pill">Ray/Path Tracing</span>
-                        <span class="pill">Video Systems</span>
-                    </div>
-                </div>
-
-                <!-- BLOC 4: Dev Tools & Environments -->
-                <div class="fade-up space-y-6 py-10 border-t border-slate-200/70">
-                    <div class="flex items-start gap-4">
-                        <div class="p-3 rounded-xl bg-signal/10 border border-signal/20 flex-shrink-0">
-                            <i data-lucide="terminal" class="w-6 h-6 text-cyan-300"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-display font-bold text-xl text-slate-700 mb-1">Dev Tools & Environments</h3>
-                            <p class="text-slate-500 text-sm leading-relaxed">Hands-on use of version control, cloud
-                                platforms and enterprise tooling gained through both academic projects and professional
-                                internship work at Avanade.</p>
-                        </div>
-                    </div>
-                    <div class="space-y-3">
-                        <div class="flex justify-between text-xs font-mono text-slate-500 mb-1"><span>Git Version
-                                Control</span><span class="text-signal">85%</span></div>
-                        <div class="bar-track">
-                            <div class="bar-fill"
-                                style="width:85%; background: var(--accent);"></div>
-                        </div>
-                        <div class="flex justify-between text-xs font-mono text-slate-500 mb-1"><span>Microsoft Power
-                                Apps</span><span class="text-signal">80%</span></div>
-                        <div class="bar-track">
-                            <div class="bar-fill"
-                                style="width:80%; background: var(--accent);"></div>
-                        </div>
-                        <div class="flex justify-between text-xs font-mono text-slate-500 mb-1"><span>Microsoft 365
-                                Environment</span><span class="text-signal">82%</span></div>
-                        <div class="bar-track">
-                            <div class="bar-fill"
-                                style="width:82%; background: var(--accent);"></div>
-                        </div>
-                        <div class="flex justify-between text-xs font-mono text-slate-500 mb-1"><span>Agile /
-                                Scrum</span><span class="text-signal">74%</span></div>
-                        <div class="bar-track">
-                            <div class="bar-fill"
-                                style="width:74%; background: var(--accent);"></div>
-                        </div>
-                    </div>
-                    <div class="flex flex-wrap gap-2 pt-2 border-t border-slate-200">
-                        <span class="pill">Git</span>
-                        <span class="pill">Power Apps</span>
-                        <span class="pill">Azure</span>
-                        <span class="pill">Agile</span>
-                    </div>
-                </div>
-
-                <!-- BLOC 5: Creative & Hobbies -->
-                <div class="fade-up space-y-6 py-10 border-t border-slate-200/70">
-                    <div class="flex items-start gap-4">
-                        <div class="p-3 rounded-xl bg-yellow-400/10 border border-yellow-400/20 flex-shrink-0">
-                            <i data-lucide="music-2" class="w-6 h-6 text-yellow-400"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-display font-bold text-xl text-slate-700 mb-1">Creative Interests & Hobbies</h3>
-                            <p class="text-slate-500 text-sm leading-relaxed">The creative side that fuels the technical
-                                work. Music and cinema are at the heart of why I chose this field — they push me to look
-                                at audiovisual problems from both a human and engineering perspective.</p>
-                        </div>
-                    </div>
-                    <div class="flex flex-wrap gap-x-10 gap-y-4 pt-2">
-                        <div class="flex items-center gap-3">
-                            <i data-lucide="guitar" class="w-5 h-5 text-yellow-400 flex-shrink-0"></i>
-                            <div>
-                                <div class="text-slate-700 text-sm font-display font-semibold">Guitar</div>
-                                <div class="text-slate-500 text-xs font-mono">Playing in free time</div>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <i data-lucide="music" class="w-5 h-5 text-indigo-300 flex-shrink-0"></i>
-                            <div>
-                                <div class="text-slate-700 text-sm font-display font-semibold">Composition</div>
-                                <div class="text-slate-500 text-xs font-mono">DAW production</div>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <i data-lucide="film" class="w-5 h-5 text-cyan-300 flex-shrink-0"></i>
-                            <div>
-                                <div class="text-slate-700 text-sm font-display font-semibold">Cinema</div>
-                                <div class="text-slate-500 text-xs font-mono">Passion for film</div>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <i data-lucide="dribbble" class="w-5 h-5 text-signal flex-shrink-0"></i>
-                            <div>
-                                <div class="text-slate-700 text-sm font-display font-semibold">Basketball</div>
-                                <div class="text-slate-500 text-xs font-mono">Playing since age 6</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex flex-wrap gap-2 pt-2 border-t border-slate-200">
-                        <span class="pill">Guitar</span>
-                        <span class="pill">Music Composition</span>
-                        <span class="pill">Cinema</span>
-                        <span class="pill">Basketball</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <!-- ACADEMIC PROJECTS SECTION -->
-    <section id="academic-projects" class="py-28 relative">
-        <div class="max-w-7xl mx-auto px-6 lg:px-10">
-
-            <div class="fade-up text-center mb-20 space-y-4">
-                <div class="section-label">University Work</div>
-                <h2 class="font-display font-extrabold text-4xl lg:text-5xl text-slate-700">
-                    Academic <span class="gradient-text">Projects</span>
-                </h2>
-                <p class="text-slate-500 max-w-2xl mx-auto text-lg">
-                    Selected work from my degree at UPF, spanning audiovisual systems, software engineering, and
-                    multimedia pipelines.
-                </p>
-            </div>
-
-            <div class="space-y-10">
-
-                <!-- 01: Birdify -->
-                <div class="fade-up relative pl-7 md:pl-9 pb-14 border-b border-slate-200/60">
-                    <div class="absolute left-0 top-1 bottom-14 w-[3px] rounded-full" style="background:linear-gradient(180deg,#2f4a63,#64748b);"></div>
-                    <div class="space-y-6">
-                        <div class="flex flex-wrap items-start justify-between gap-4">
-                            <div class="flex items-center gap-4">
-                                <div class="p-3 rounded-xl bg-cyan-400/10 border border-cyan-400/20 flex-shrink-0">
-                                    <i data-lucide="bird" class="w-6 h-6 text-cyan-300"></i>
-                                </div>
-                                <div>
-                                    <div class="font-mono text-xs text-cyan-300 opacity-50 mb-1">01 / 07</div>
-                                    <h3 class="font-display font-extrabold text-2xl text-slate-700 leading-tight">Birdify</h3>
-                                    <div class="font-mono text-xs text-cyan-300 mt-1">Bird Sound Classifier using ML</div>
-                                </div>
-                            </div>
-                            <div class="flex gap-2 flex-wrap">
-                                <span class="pill">Mar – Jun 2025</span>
-                                <span class="pill">UPF</span>
-                            </div>
-                        </div>
-                        <p class="text-slate-600 text-sm leading-relaxed max-w-3xl">A machine learning application that
-                            classifies bird species from their sounds, developed for the <strong
-                                class="text-slate-700">Musical Technology Workshop</strong> course. Combines audio
-                            signal processing with a full ML pipeline — from dataset selection and audio preprocessing
-                            to model training and deployment via a <strong class="text-slate-700">Streamlit</strong>
-                            interactive interface.</p>
-                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
-                            <div class="border-l-2 border-slate-300/70 pl-3">
-                                <div class="font-mono text-xs text-cyan-300 uppercase tracking-widest mb-1 opacity-70">
-                                    Feature Extraction</div>
-                                <div class="text-slate-600 text-sm">MFCCs</div>
-                            </div>
-                            <div class="border-l-2 border-slate-300/70 pl-3">
-                                <div class="font-mono text-xs text-cyan-300 uppercase tracking-widest mb-1 opacity-70">
-                                    Models Trained</div>
-                                <div class="text-slate-600 text-sm">KNN · SVM · CNN · AFCNN</div>
-                            </div>
-                            <div class="border-l-2 border-slate-300/70 pl-3">
-                                <div class="font-mono text-xs text-cyan-300 uppercase tracking-widest mb-1 opacity-70">
-                                    Preprocessing</div>
-                                <div class="text-slate-600 text-sm">Denoising · Segmentation</div>
-                            </div>
-                            <div class="border-l-2 border-slate-300/70 pl-3">
-                                <div class="font-mono text-xs text-cyan-300 uppercase tracking-widest mb-1 opacity-70">
-                                    Deployment</div>
-                                <div class="text-slate-600 text-sm">Streamlit App</div>
-                            </div>
-                        </div>
-                        <div class="flex flex-wrap items-center justify-between gap-4 pt-2 border-t border-slate-200">
-                            <div class="flex flex-wrap gap-2">
-                                <span class="tag">Python</span>
-                                <span class="tag">Machine Learning</span>
-                                <span class="tag">DSP</span>
-                                <span class="tag">Streamlit</span>
-                                <span class="tag">MFCCs</span>
-                            </div>
-                            <a href="https://github.com/XavierRiera/Birdify" target="_blank" rel="noopener"
-                                class="btn-cyan px-5 py-2 text-sm inline-flex items-center gap-2">
-                                <i data-lucide="github" class="w-4 h-4"></i> View on GitHub
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 02: Medical Volume Rendering (Computer Graphics) -->
-                <div class="fade-up relative pl-7 md:pl-9 pb-14 border-b border-slate-200/60">
-                    <div class="absolute left-0 top-1 bottom-14 w-[3px] rounded-full" style="background:linear-gradient(180deg,#64748b,#64748b);"></div>
-                    <div class="space-y-6">
-                        <div class="flex flex-wrap items-start justify-between gap-4">
-                            <div class="flex items-center gap-4">
-                                <div class="p-3 rounded-xl bg-rose-400/10 border border-rose-400/20 flex-shrink-0">
-                                    <i data-lucide="box" class="w-6 h-6 text-rose-300"></i>
-                                </div>
-                                <div>
-                                    <div class="font-mono text-xs text-rose-300 opacity-50 mb-1">02 / 07</div>
-                                    <h3 class="font-display font-extrabold text-2xl text-slate-700 leading-tight">Medical
-                                        Image Volume Rendering</h3>
-                                    <div class="font-mono text-xs text-rose-300 mt-1">3D Scientific Visualization Pipeline</div>
-                                </div>
-                            </div>
-                            <div class="flex gap-2 flex-wrap">
-                                <span class="pill">Oct – Dec 2025</span>
-                                <span class="pill">UPF · Group Project</span>
-                            </div>
-                        </div>
-                        <p class="text-slate-600 text-sm leading-relaxed max-w-3xl">A collaborative group project
-                            developed for the <strong class="text-slate-700">Computer Graphics</strong> course. Built a
-                            specialized visualization tool that processes and renders raw 3D medical datasets (like
-                            CT/MRI scans) using advanced volume rendering techniques. Implemented Ray Casting, transfer
-                            functions for density mapping, and optimization structures to visualize internal human
-                            anatomy with high accuracy.</p>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-6">
-                            <div class="rounded-xl overflow-hidden border border-slate-300/50 aspect-video flex items-center justify-center relative group">
-                                <img src="images/vr1.png" alt="Volume Rendering 1" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                            </div>
-                            <div class="rounded-xl overflow-hidden border border-slate-300/50 aspect-video flex items-center justify-center relative group">
-                                <img src="images/vr2.png" alt="Volume Rendering 2" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                            </div>
-                        </div>
-
-                        <div class="flex flex-wrap items-center justify-between gap-4 pt-2 border-t border-slate-200">
-                            <div class="flex flex-wrap gap-2">
-                                <span class="tag">Computer Graphics</span>
-                                <span class="tag">Volume Rendering</span>
-                                <span class="tag">Ray Casting</span>
-                                <span class="tag">Medical Imaging</span>
-                                <span class="tag">3D Visualization</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 03: Star Diaries -->
-                <div class="fade-up relative pl-7 md:pl-9 pb-14 border-b border-slate-200/60">
-                    <div class="absolute left-0 top-1 bottom-14 w-[3px] rounded-full" style="background:linear-gradient(180deg,#64748b,#2f4a63);"></div>
-                    <div class="space-y-6">
-                        <div class="flex flex-wrap items-start justify-between gap-4">
-                            <div class="flex items-center gap-4">
-                                <div class="p-3 rounded-xl bg-indigo-400/10 border border-indigo-400/20 flex-shrink-0">
-                                    <i data-lucide="gamepad-2" class="w-6 h-6 text-indigo-300"></i>
-                                </div>
-                                <div>
-                                    <div class="font-mono text-xs opacity-50 mb-1" style="color:#64748b;">03 / 07</div>
-                                    <h3 class="font-display font-extrabold text-2xl text-slate-700 leading-tight">Star Diaries: Chapter VII</h3>
-                                    <div class="font-mono text-xs mt-1" style="color:#64748b;">Narrative Puzzle Video Game</div>
-                                </div>
-                            </div>
-                            <div class="flex gap-2 flex-wrap">
-                                <span class="pill">Jan – Mar 2026</span>
-                                <span class="pill">UPF</span>
-                            </div>
-                        </div>
-                        <p class="text-slate-600 text-sm leading-relaxed max-w-3xl">A narrative-driven puzzle game
-                            developed for the <strong class="text-slate-700">Narrative and Video Games</strong> course.
-                            Inspired by the science fiction of <strong class="text-slate-700">Stanisław Lem</strong>,
-                            players navigate a temporal loop aboard a failing spaceship, solving technical failures
-                            through environmental storytelling. Covers the full development cycle — from Game Design
-                            Document to custom assets and final playable build.</p>
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                            <div class="flex items-center gap-3 border-l-2 border-slate-300/70 pl-3">
-                                <i data-lucide="book-open" class="w-4 h-4 text-indigo-300 flex-shrink-0"></i>
-                                <div>
-                                    <div class="font-mono text-xs opacity-60 mb-0.5" style="color:#64748b;">Inspiration</div>
-                                    <div class="text-slate-600 text-sm">Stanisław Lem</div>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-3 border-l-2 border-slate-300/70 pl-3">
-                                <i data-lucide="refresh-cw" class="w-4 h-4 text-indigo-300 flex-shrink-0"></i>
-                                <div>
-                                    <div class="font-mono text-xs opacity-60 mb-0.5" style="color:#64748b;">Mechanic</div>
-                                    <div class="text-slate-600 text-sm">Temporal Loop</div>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-3 border-l-2 border-slate-300/70 pl-3">
-                                <i data-lucide="file-text" class="w-4 h-4 text-indigo-300 flex-shrink-0"></i>
-                                <div>
-                                    <div class="font-mono text-xs opacity-60 mb-0.5" style="color:#64748b;">Deliverables</div>
-                                    <div class="text-slate-600 text-sm">GDD & Assets</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex flex-wrap items-center justify-between gap-4 pt-2 border-t border-slate-200">
-                            <div class="flex flex-wrap gap-2">
-                                <span class="tag">Game Design</span>
-                                <span class="tag">Narrative Design</span>
-                                <span class="tag">Puzzle Logic</span>
-                                <span class="tag">Asset Creation</span>
-                            </div>
-                            <a href="https://github.com/byEriK12/Star-Diaries---Chapter-VII/releases" target="_blank"
-                                rel="noopener" class="btn-ghost px-5 py-2 text-sm inline-flex items-center gap-2">
-                                <i data-lucide="download" class="w-4 h-4"></i> Download Game
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 04: Video Systems Capstone -->
-                <div class="fade-up relative pl-7 md:pl-9 pb-14 border-b border-slate-200/60">
-                    <div class="absolute left-0 top-1 bottom-14 w-[3px] rounded-full" style="background:linear-gradient(180deg,#2f4a63,#2f4a63);"></div>
-                    <div class="space-y-6">
-                        <div class="flex flex-wrap items-start justify-between gap-4">
-                            <div class="flex items-center gap-4">
-                                <div class="p-3 rounded-xl bg-teal-400/10 border border-teal-400/20 flex-shrink-0">
-                                    <i data-lucide="clapperboard" class="w-6 h-6 text-teal-400"></i>
-                                </div>
-                                <div>
-                                    <div class="font-mono text-xs text-teal-400 opacity-50 mb-1">04 / 07</div>
-                                    <h3 class="font-display font-extrabold text-2xl text-slate-700 leading-tight">Audiovisual Pipeline & Music Video Production</h3>
-                                    <div class="font-mono text-xs text-teal-400 mt-1">Creative Video Systems Engineering</div>
-                                </div>
-                            </div>
-                            <div class="flex gap-2 flex-wrap">
-                                <span class="pill">Jan – Apr 2026</span>
-                                <span class="pill">UPF · Final Project</span>
-                            </div>
-                        </div>
-                        <p class="text-slate-600 text-sm leading-relaxed max-w-3xl">A creative and technical capstone
-                            project for the <strong class="text-slate-700">Video Systems and Equipment</strong> course
-                            designed to master the end-to-end professional video production pipeline. Handled
-                            studio/field video gear setup, routing, signal management, and final mastering. Delivered a
-                            fully produced music video as the final thesis, proving hands-on command over encoding
-                            standards, color workflows, and hardware infrastructure.</p>
-                        <div class="flex flex-wrap items-center justify-between gap-4 pt-2 border-t border-slate-200">
-                            <div class="flex flex-wrap gap-2">
-                                <span class="tag">Video Systems</span>
-                                <span class="tag">AV Pipeline</span>
-                                <span class="tag">Video Equipment</span>
-                                <span class="tag">Post-Production</span>
-                                <span class="tag">Encoding</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 05: INCASÒL -->
-                <div class="fade-up relative pl-7 md:pl-9 pb-14 border-b border-slate-200/60">
-                    <div class="absolute left-0 top-1 bottom-14 w-[3px] rounded-full" style="background:linear-gradient(180deg,#2f4a63,#64748b);"></div>
-                    <div class="space-y-6">
-                        <div class="flex flex-wrap items-start justify-between gap-4">
-                            <div class="flex items-center gap-4">
-                                <div class="p-3 rounded-xl bg-cyan-400/10 border border-cyan-400/20 flex-shrink-0">
-                                    <i data-lucide="database" class="w-6 h-6 text-cyan-300"></i>
-                                </div>
-                                <div>
-                                    <div class="font-mono text-xs opacity-50 mb-1" style="color:#2f4a63;">05 / 07</div>
-                                    <h3 class="font-display font-extrabold text-2xl text-slate-700 leading-tight">INCASÒL System Migration</h3>
-                                    <div class="font-mono text-xs mt-1" style="color:#2f4a63;">Consortium Management System Design</div>
-                                </div>
-                            </div>
-                            <div class="flex gap-2 flex-wrap">
-                                <span class="pill">Oct – Dec 2025</span>
-                                <span class="pill">UPF</span>
-                            </div>
-                        </div>
-                        <p class="text-slate-600 text-sm leading-relaxed max-w-3xl">A real-world consulting project
-                            for the <strong class="text-slate-700">IT Project Management</strong> course, in
-                            collaboration with <strong class="text-slate-700">INCASÒL</strong> (Catalan housing agency). Designed
-                            a new Data Map architecture to migrate an obsolete Microsoft Access database to OutSystems,
-                            working under a professional consulting model with weekly client feedback loops.</p>
-                        <div class="flex flex-wrap items-center gap-4">
-                            <div class="font-mono text-sm text-slate-400 line-through border-b border-slate-300/60 pb-1">
-                                Microsoft Access</div>
-                            <i data-lucide="arrow-right" class="w-5 h-5 text-slate-400 flex-shrink-0"></i>
-                            <div class="font-mono text-sm font-semibold border-b-2 pb-1" style="border-color:#2f4a63;color:#2f4a63;">
-                                OutSystems</div>
-                            <div class="ml-auto font-mono text-xs text-slate-500 border-b border-slate-300/60 pb-1">
-                                Weekly sprints · Public sector</div>
-                        </div>
-                        <div class="flex flex-wrap items-center justify-between gap-4 pt-2 border-t border-slate-200">
-                            <div class="flex flex-wrap gap-2">
-                                <span class="tag">OutSystems</span>
-                                <span class="tag">IT Project Management</span>
-                                <span class="tag">Data Architecture</span>
-                                <span class="tag">Agile</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 06: SOUNDreview -->
-                <div class="fade-up relative pl-7 md:pl-9 pb-14 border-b border-slate-200/60">
-                    <div class="absolute left-0 top-1 bottom-14 w-[3px] rounded-full" style="background:linear-gradient(180deg,#64748b,#64748b);"></div>
-                    <div class="space-y-6">
-                        <div class="flex flex-wrap items-start justify-between gap-4">
-                            <div class="flex items-center gap-4">
-                                <div class="p-3 rounded-xl bg-amber-400/10 border border-amber-400/20 flex-shrink-0">
-                                    <i data-lucide="disc" class="w-6 h-6 text-amber-400"></i>
-                                </div>
-                                <div>
-                                    <div class="font-mono text-xs text-amber-400 opacity-50 mb-1">06 / 07</div>
-                                    <h3 class="font-display font-extrabold text-2xl text-slate-700 leading-tight">SOUNDreview</h3>
-                                    <div class="font-mono text-xs text-amber-400 mt-1">Music Discovery & Review Platform Prototype</div>
-                                </div>
-                            </div>
-                            <div class="flex gap-2 flex-wrap">
-                                <span class="pill">Apr – Jun 2023</span>
-                                <span class="pill">UPF</span>
-                            </div>
-                        </div>
-                        <p class="text-slate-600 text-sm leading-relaxed max-w-3xl">An architecture and app
-                            prototype built for the <strong class="text-slate-700">Data Structures and Algorithms II</strong>
-                            course. Designed to act as a "Letterboxd for music", the system was heavily optimized
-                            under the hood for efficient indexing, fast search queries, and complex relational mappings
-                            between user profiles, reviews, albums, and artist data trees.</p>
-                        <div class="flex flex-wrap items-center justify-between gap-4 pt-2 border-t border-slate-200">
-                            <div class="flex flex-wrap gap-2">
-                                <span class="tag">Data Structures</span>
-                                <span class="tag">Algorithms</span>
-                                <span class="tag">Java / OOP</span>
-                                <span class="tag">App Prototyping</span>
-                                <span class="tag">Optimization</span>
-                            </div>
-                            <a href="https://github.com/arnaumartin1/SoundReview" target="_blank" rel="noopener"
-                                class="btn-ghost px-5 py-2 text-sm inline-flex items-center gap-2">
-                                <i data-lucide="github" class="w-4 h-4"></i> View on GitHub
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 07: KidConnect -->
-                <div class="fade-up relative pl-7 md:pl-9 pb-14 border-b border-slate-200/60">
-                    <div class="absolute left-0 top-1 bottom-14 w-[3px] rounded-full" style="background:linear-gradient(180deg,#64748b,#64748b);"></div>
-                    <div class="space-y-6">
-                        <div class="flex flex-wrap items-start justify-between gap-4">
-                            <div class="flex items-center gap-4">
-                                <div class="p-3 rounded-xl bg-purple-400/10 border border-purple-400/20 flex-shrink-0">
-                                    <i data-lucide="users" class="w-6 h-6 text-purple-400"></i>
-                                </div>
-                                <div>
-                                    <div class="font-mono text-xs text-purple-400 opacity-50 mb-1">07 / 07</div>
-                                    <h3 class="font-display font-extrabold text-2xl text-slate-700 leading-tight">KidConnect</h3>
-                                    <div class="font-mono text-xs text-purple-400 mt-1">Childcare Professional Marketplace</div>
-                                </div>
-                            </div>
-                            <div class="flex gap-2 flex-wrap">
-                                <span class="pill">Feb – Jun 2024</span>
-                                <span class="pill">UPF</span>
-                            </div>
-                        </div>
-                        <p class="text-slate-600 text-sm leading-relaxed max-w-3xl">A complete web application
-                            developed for the <strong class="text-slate-700">Software Engineering</strong> course. Engineered
-                            a secure marketplace platform connecting parents with verified childcare specialists.
-                            Built with strict adherence to architectural patterns, modular design principles, user flow
-                            structures, and backend relationship management.</p>
-                        <div class="flex flex-wrap items-center justify-between gap-4 pt-2 border-t border-slate-200">
-                            <div class="flex flex-wrap gap-2">
-                                <span class="tag">Software Engineering</span>
-                                <span class="tag">Web Architecture</span>
-                                <span class="tag">Design Patterns</span>
-                                <span class="tag">Database Management</span>
-                            </div>
-                            <a href="https://github.com/arnaumartin1/KidConnect" target="_blank" rel="noopener"
-                                class="btn-ghost px-5 py-2 text-sm inline-flex items-center gap-2">
-                                <i data-lucide="github" class="w-4 h-4"></i> View on GitHub
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- PERSONAL PROJECTS SECTION -->
-    <section id="personal-projects" class="py-28 relative">
-        <div class="max-w-7xl mx-auto px-6 lg:px-10">
-
-            <div class="fade-up text-center mb-20 space-y-4">
-                <div class="section-label">Research & Development</div>
-                <h2 class="font-display font-extrabold text-4xl lg:text-5xl text-slate-700">
-                    Featured <span class="gradient-text">Projects</span>
-                </h2>
-                <p class="text-slate-500 max-w-2xl mx-auto text-lg">
-                    From cutting-edge academic research in audio security to interactive tools born out of curiosity for sound mechanics.
-                </p>
-            </div>
-
-            <!-- PRINCIPAL PROJECT: TFG -->
-            <div class="fade-up relative pl-7 md:pl-9 pb-4 mb-16 border-b border-slate-200/60 flex flex-col justify-between">
                 <div>
-                    <div class="absolute left-0 top-1 bottom-4 w-[3px] rounded-full" style="background:linear-gradient(180deg, #2f4a63, #64748b, #64748b);"></div>
-
-                    <div class="space-y-8">
-                        <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-6 pb-6 border-b border-slate-200">
-                            <div class="flex items-center gap-5">
-                                <div class="p-4 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex-shrink-0">
-                                    <i data-lucide="graduation-cap" class="w-8 h-8 text-cyan-300"></i>
-                                </div>
-                                <div>
-                                    <div class="font-mono text-xs text-cyan-300 uppercase tracking-wider mb-1">
-                                        Principal Project · Bachelor's Thesis (UPF 2025-2026)
-                                    </div>
-                                    <h3 class="font-display font-extrabold text-2xl lg:text-3xl text-slate-700 leading-tight max-w-3xl">
-                                        Robustness Evaluation of AI-Generated Music Detectors Based on Audio Encoder Features
-                                    </h3>
-                                    <p class="text-xs text-slate-500 mt-2 font-mono">
-                                        Author: Arnau Martin Riera · Advisor: Martín Rocamora
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="grid lg:grid-cols-3 gap-8">
-                            <div class="lg:col-span-2 space-y-6 text-sm leading-relaxed text-slate-600">
-                                <h4 class="text-slate-700 font-semibold font-display text-base flex items-center gap-2">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span> Context & Problem Statement
-                                </h4>
-                                <p>
-                                    The rise of generative platforms like Suno and Udio enables the creation of high-fidelity songs virtually indistinguishable to the human ear. However, neural codec-based decoders (such as Encodec) leave structural fingerprints: so-called <strong class="text-cyan-300 font-semibold">"fakeprints"</strong>. These artifacts are replicas of upsampling operations and strided deconvolutions within Convolutional Neural Networks (CNNs).
-                                </p>
-                                <p>
-                                    While statistical detectors based on linear regressions or shallow models achieve 100% accuracy under laboratory conditions, this research exposes their <strong class="text-slate-700">systemic fragility</strong>. Detectors do not learn the abstract concept of "real music" or "artificial music"; instead, they memorize the metric rigidity and exact placement of spectral peaks unique to each specific generation network.
-                                </p>
-                                
-                                <div class="border-l-2 border-slate-300/70 pl-4 font-mono text-xs text-slate-600 space-y-3">
-                                    <div class="text-cyan-300 font-bold font-display text-xs mb-1 uppercase tracking-wider">Mathematical Foundation of the Artifact:</div>
-                                    <p>
-                                        In a deconvolution layer with a stride <em>k</em>, the zero-upsampling operation periodizes the spectrum, introducing narrow peaks at equidistant intervals at the following frequencies:
-                                    </p>
-                                    <p class="text-center text-slate-700 py-1.5 text-sm font-sans tracking-wide border-b border-slate-300/50">
-                                        n · f<sub>s</sub> &nbsp;&nbsp;<span class="text-slate-400 text-xs font-mono">for integer bins</span>&nbsp;&nbsp; n ∈ [0, ⌊k/2⌋]
-                                    </p>
-                                    <p>
-                                        When chaining multiple layers, the maximum number of resulting spectral peaks in the output grows recursively according to the formula:
-                                    </p>
-                                    <p class="text-center text-slate-700 py-1.5 text-sm font-sans tracking-wide border-b border-slate-300/50">
-                                        ⌊P<sub>max</sub>/2⌋ + 1, &nbsp;&nbsp;<span class="text-slate-400 text-xs font-mono">where</span>&nbsp;&nbsp; P<sub>max</sub> = ∏ k<sup>(i)</sup>
-                                    </p>
-                                    <p>
-                                        This metric signature is canceled out by temporally averaging the Short-Time Fourier Transform (STFT) across thousands of frames, effectively exposing the underlying architecture of the source model.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="space-y-6">
-                                <h4 class="text-slate-700 font-semibold font-display text-base flex items-center gap-2">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span> Multiband Degradation Pipeline
-                                </h4>
-                                <p class="text-sm text-slate-600 leading-relaxed">
-                                    As the primary contribution of this thesis, a post-processing pipeline was designed and optimized based on the <strong class="text-indigo-300 font-semibold">Overlap-Add (OLA)</strong> method combined with phase perturbations via millisecond block micro-shifts.
-                                </p>
-                                
-                                <ul class="space-y-3 border-l-2 border-slate-300/70 pl-4 text-xs text-slate-600 font-mono">
-                                    <li class="flex items-start gap-2">
-                                        <span class="text-indigo-300">▸</span>
-                                        <span><strong>Multiband Decomposition:</strong> The signal is isolated into two distinct bands using a fixed cutoff frequency of 4000 Hz.</span>
-                                    </li>
-                                    <li class="flex items-start gap-2">
-                                        <span class="text-indigo-300">▸</span>
-                                        <span><strong>Micro-Timing Displacements:</strong> Random, asynchronous phase perturbations are applied exclusively to the mid-high band. This disrupts the rigidity of the temporal spectral grid without compromising musical dynamics.</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="pt-6 border-t border-slate-200 grid md:grid-cols-2 lg:grid-cols-4 gap-4 text-center">
-                            <div class="border-t-2 border-slate-300/60 pt-3">
-                                <div class="font-display font-extrabold text-3xl text-red-400">100% &rarr; 0%</div>
-                                <div class="text-xs text-slate-500 font-mono uppercase tracking-wider mt-1">Detector Accuracy (Suno)</div>
-                            </div>
-                            <div class="border-t-2 border-slate-300/60 pt-3">
-                                <div class="font-display font-extrabold text-3xl text-red-400">100% &rarr; 4%</div>
-                                <div class="text-xs text-slate-500 font-mono uppercase tracking-wider mt-1">Detector Accuracy (Udio)</div>
-                            </div>
-                            <div class="border-t-2 border-slate-300/60 pt-3">
-                                <div class="font-display font-extrabold text-3xl text-cyan-300">53.3%</div>
-                                <div class="text-xs text-slate-500 font-mono uppercase tracking-wider mt-1">Human Success (Chance)</div>
-                            </div>
-                            <div class="border-t-2 border-slate-300/60 pt-3">
-                                <div class="font-display font-extrabold text-3xl text-indigo-300">3.82 / 5</div>
-                                <div class="text-xs text-slate-500 font-mono uppercase tracking-wider mt-1">Human Likert Scale Difficulty</div>
-                            </div>
-                        </div>
-
-                        <p class="text-xs text-slate-500 italic leading-relaxed">
-                            <strong>Research Conclusion:</strong> Results from a perceptual test with a control group of N = 20 listeners conclusively demonstrate that micro-timing alterations and phase decomposition are completely transparent to the human ear. This opens a critical and urgent debate within the music industry regarding the reliability of current spectral-architecture-based detectors against adversarial attacks.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="pt-4">
-                    <div class="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-slate-200">
-                        <div class="flex flex-wrap gap-1.5">
-                            <span class="tag">Audio Signal Processing</span>
-                            <span class="tag">Audio Fakeprints</span>
-                            <span class="tag">Overlap-Add (OLA)</span>
-                            <span class="tag">Fourier Theory & STFT</span>
-                            <span class="tag">Psychoacoustics</span>
-                            <span class="tag">Python & FFmpeg</span>
-                            <span class="tag">Adversarial Robustness</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- SECONDARY PROJECTS GRID -->
-            <div class="grid md:grid-cols-2 gap-8">
-                <!-- Personal 01: fixyoursound -->
-                <div class="fade-up relative pl-7 pb-2 border-b border-slate-200/60 flex flex-col justify-between">
-                    <div>
-                        <div class="absolute left-0 top-1 bottom-2 w-[3px] rounded-full" style="background:linear-gradient(180deg,#64748b,#64748b);"></div>
-                        <div class="pt-2 space-y-6">
-                            <div class="flex items-start justify-between gap-4">
-                                <div class="flex items-center gap-4">
-                                    <div class="p-3 rounded-xl bg-amber-400/10 border border-amber-400/20 flex-shrink-0">
-                                        <i data-lucide="sparkles" class="w-6 h-6 text-amber-400"></i>
-                                    </div>
-                                    <div>
-                                        <div class="font-mono text-xs text-amber-400 opacity-50 mb-1">01 / 02 · Side Project</div>
-                                        <h3 class="font-display font-extrabold text-2xl text-slate-700 leading-tight">fixyoursound</h3>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <p class="text-slate-600 text-sm leading-relaxed mb-4">
-                                What started as a lightweight <strong class="text-slate-700">vibe-coding test</strong>
-                                evolved into a powerful, full-stack educational ecosystem engineered to democratize
-                                music theory and audio engineering. Instead of treating AI as a "black-box" automation
-                                system that generates flattened audio files and replaces human creativity, <strong class="text-amber-400">fixyoursound</strong> leverages Large Language Models (LLMs)
-                                as an interactive, real-time co-producer and technical mentor. The platform bridges the
-                                gap between creative abstract intent and concrete technical execution, guiding modern
-                                producers through complex sound synthesis, compositional structures, and algorithmic
-                                rhythm analysis directly inside the browser.
-                            </p>
-
-                            <div class="space-y-4 border-l-2 border-slate-300/70 pl-4 text-xs text-slate-600">
-                                <div class="flex flex-col gap-1.5">
-                                    <div class="flex items-center gap-2">
-                                        <span class="text-amber-400 font-bold font-mono text-sm">▸ Sound Replicator</span>
-                                    </div>
-                                    <p class="pl-4 leading-relaxed text-slate-600">
-                                        An advanced natural language interface for audio synthesis. Users describe
-                                        complex acoustic textures, vintage synth patches, or specific guitar tones in
-                                        plain English (e.g., "a dark, detuned, low-pass techno bass"). The AI acts as an
-                                        expert engineer, reverse-engineering the text into raw synthesis data—mapping
-                                        out precise oscillator types, envelope shapes (ADSR), LFO modulation routings,
-                                        and dynamic FX chains (filters, saturation, delays). Instead of delivering a
-                                        sample, it renders the sound in real-time using native web audio synthesis and
-                                        provides an explicit, interactive patching guide that explains the physical
-                                        science behind how each parameter shapes the frequency spectrum.
-                                    </p>
-                                </div>
-
-                                <div class="flex flex-col gap-1.5 border-t border-slate-200 pt-3">
-                                    <div class="flex items-center gap-2">
-                                        <span class="text-amber-400 font-bold font-mono text-sm">▸ Interactive Beat Maker & Chord Architect</span>
-                                    </div>
-                                    <p class="pl-4 leading-relaxed text-slate-600">
-                                        A dynamic compositional tool that translates algorithmic text prompts into
-                                        complete MIDI sequences, functional chord progressions, and intricate drum
-                                        patterns. The system parses structured data configurations to feed a responsive,
-                                        interactive step-sequencer and digital piano visualizer. Every generated groove
-                                        is accompanied by a deep architectural and music theory breakdown, demystifying
-                                        syncopation, polyrhythms, harmonic tension, and modal choices. This teaches
-                                        users exactly why a rhythm works and how it creates cultural 'vibe' and
-                                        movement.
-                                    </p>
-                                </div>
-
-                                <div class="flex flex-col gap-1.5 border-t border-slate-200 pt-3">
-                                    <div class="flex items-center gap-2">
-                                        <span class="text-amber-400 font-bold font-mono text-sm">▸ Collaborative Real-Time Community</span>
-                                    </div>
-                                    <p class="pl-4 leading-relaxed text-slate-600">
-                                        A secure, full-stack social hub designed to break the isolation of bedroom
-                                        production. Backed by a relational database model (Prisma + Supabase PostgreSQL)
-                                        and integrated session handling (NextAuth), it allows emerging producers to log
-                                        in, share their creative AI prompts, critique structural loop breakdowns, and
-                                        collaboratively build knowledge in real-time.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="pt-4">
-                        <div class="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-slate-200">
-                            <div class="flex flex-wrap gap-1.5">
-                                <span class="tag">AI/LLMs</span>
-                                <span class="tag">Vibe-Coding</span>
-                                <span class="tag">Next.js 15</span>
-                                <span class="tag">Music Tech</span>
-                                <span class="tag">Web Audio API</span>
-                                <span class="tag">Prisma & Supabase</span>
-                            </div>
-                            <a href="https://fixyoursound.vercel.app/" target="_blank" rel="noopener"
-                                class="btn-cyan px-4 py-2 text-xs inline-flex items-center gap-2"
-                                style="background:#64748b;color:#ffffff;">
-                                <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Visit Web
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Personal 02: easySynth -->
-                <div class="fade-up relative pl-7 pb-2 border-b border-slate-200/60 flex flex-col justify-between">
-                    <div>
-                        <div class="absolute left-0 top-1 bottom-2 w-[3px] rounded-full" style="background:linear-gradient(180deg,#64748b,#2f4a63);"></div>
-                        <div class="pt-2 space-y-6">
-                            <div class="flex items-start justify-between gap-4">
-                                <div class="flex items-center gap-4">
-                                    <div class="p-3 rounded-xl bg-indigo-400/10 border border-indigo-400/20 flex-shrink-0">
-                                        <i data-lucide="sliders" class="w-6 h-6 text-indigo-300"></i>
-                                    </div>
-                                    <div>
-                                        <div class="font-mono text-xs text-indigo-400 opacity-50 mb-1">02 / 02 · Audio Engineering</div>
-                                        <h3 class="font-display font-extrabold text-2xl text-slate-700 leading-tight">easySynth</h3>
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="text-slate-600 text-sm leading-relaxed">
-                                Built out of a strong personal drive to fully master synthesis architecture from the
-                                ground up. easySynth is an interactive, web-based compact synthesizer designed to teach
-                                the core mechanics of oscillators, envelopes, and signal flow manipulation in a highly
-                                visual way.
-                            </p>
-                            <div class="flex items-center gap-3 border-l-2 border-slate-300/70 pl-3">
-                                <i data-lucide="cable" class="w-5 h-5 text-indigo-300 flex-shrink-0"></i>
-                                <div>
-                                    <div class="text-slate-700 text-xs font-display font-semibold">Native MIDI Controller Support</div>
-                                    <div class="text-slate-500 text-xs">Allows users to map and plug in real external hardware directly into the browser pipeline.</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="pt-4">
-                        <div class="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-slate-200">
-                            <div class="flex flex-wrap gap-1.5">
-                                <span class="tag">Web Audio API</span>
-                                <span class="tag">Synthesizers</span>
-                                <span class="tag">MIDI Protocol</span>
-                                <span class="tag">JavaScript</span>
-                            </div>
-                            <a href="https://arnaumartin10.github.io/easySynth/" target="_blank" rel="noopener"
-                                class="btn-cyan px-4 py-2 text-xs inline-flex items-center gap-2">
-                                <i data-lucide="play" class="w-3.5 h-3.5"></i> Open Synth
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+          <p class="font-display text-2xl text-ink">Junior/Graduate</p>
+          <p class="text-xs text-ink-3 uppercase tracking-wide mt-1">Current Level</p>
         </div>
-    </section>
+      </div>
+    </div>
+  </div>
+</section>
 
+<!-- SKILLS -->
+<section id="skills" class="max-w-6xl mx-auto px-6 md:px-10 py-24 md:py-32 rule">
+  <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 fade-up">
+    <div>
+      <p class="eyebrow mb-4">Technical competencies</p>
+      <h2 class="font-display text-ink text-4xl md:text-5xl leading-tight">Areas of Expertise</h2>
+    </div>
+    <p class="max-w-sm text-ink-2 text-sm leading-relaxed">
+      Signal processing, audio production tools, and software development, the technical range behind the work below.
+    </p>
+  </div>
 
-    <!-- EXPERIENCE & EDUCATION SECTION -->
-    <section id="experience" class="py-28">
-        <div class="max-w-7xl mx-auto px-6 lg:px-10">
+  <div class="grid md:grid-cols-2 gap-x-12 gap-y-14">
 
-            <div class="fade-up text-center mb-20 space-y-4">
-                <div class="section-label">Background & training</div>
-                <h2 class="font-display font-extrabold text-4xl lg:text-5xl text-slate-700">
-                    Experience & <span class="gradient-text">Education</span>
-                </h2>
-            </div>
+    <div class="group fade-up">
+      <div class="flex items-baseline justify-between mb-6">
+        <h3 class="font-display text-xl text-ink">Software Development</h3>
+        <span class="index-num">01</span>
+      </div>
+      <p class="text-sm text-ink-2 leading-relaxed mb-6">General-purpose programming across a few languages and frameworks, applied recently to university projects in signal processing and video coding.</p>
+      <div class="space-y-3">
+        <div><div class="flex justify-between text-xs text-ink-3 mb-1.5"><span>Python</span><span>85%</span></div><div class="bar-track"><div class="bar-fill" style="width:85%"></div></div></div>
+        <div><div class="flex justify-between text-xs text-ink-3 mb-1.5"><span>C / C#</span><span>70%</span></div><div class="bar-track"><div class="bar-fill" style="width:70%"></div></div></div>
+        <div><div class="flex justify-between text-xs text-ink-3 mb-1.5"><span>C++</span><span>60%</span></div><div class="bar-track"><div class="bar-fill" style="width:60%"></div></div></div>
+        <div><div class="flex justify-between text-xs text-ink-3 mb-1.5"><span>Java</span><span>75%</span></div><div class="bar-track"><div class="bar-fill" style="width:75%"></div></div></div>
+        <div><div class="flex justify-between text-xs text-ink-3 mb-1.5"><span>JavaScript / TypeScript</span><span>50%</span></div><div class="bar-track"><div class="bar-fill" style="width:50%"></div></div></div>
+      </div>
+    </div>
 
-            <div class="grid lg:grid-cols-3 gap-8">
+    <div class="group fade-up delay-100">
+      <div class="flex items-baseline justify-between mb-6">
+        <h3 class="font-display text-xl text-ink">Audio Systems &amp; DSP</h3>
+        <span class="index-num">02</span>
+      </div>
+      <p class="text-sm text-ink-2 leading-relaxed mb-6">Solid understanding of professional audio equipment, signal routing, and electroacoustics. Skilled in core signal processing theory, coding standards, and acoustic measurement alongside creative DAW environments.</p>
+      <div class="space-y-3">
+        <div><div class="flex justify-between text-xs text-ink-3 mb-1.5"><span>Signal Processing &amp; Acoustic Theory</span><span>90%</span></div><div class="bar-track"><div class="bar-fill" style="width:90%"></div></div></div>
+        <div><div class="flex justify-between text-xs text-ink-3 mb-1.5"><span>Audio Coding &amp; Codecs</span><span>80%</span></div><div class="bar-track"><div class="bar-fill" style="width:80%"></div></div></div>
+        <div><div class="flex justify-between text-xs text-ink-3 mb-1.5"><span>Audio Equipment &amp; Systems</span><span>85%</span></div><div class="bar-track"><div class="bar-fill" style="width:85%"></div></div></div>
+        <div><div class="flex justify-between text-xs text-ink-3 mb-1.5"><span>Logic Pro &amp; Reaper (DAWs)</span><span>85%</span></div><div class="bar-track"><div class="bar-fill" style="width:85%"></div></div></div>
+        <div><div class="flex justify-between text-xs text-ink-3 mb-1.5"><span>REW (Room EQ Wizard)</span><span>70%</span></div><div class="bar-track"><div class="bar-fill" style="width:70%"></div></div></div>
+      </div>
+    </div>
 
-                <!-- Left: Education -->
-                <div class="lg:col-span-1 space-y-5 fade-up">
-                    <h3 class="font-display font-bold text-xl text-slate-700 flex items-center gap-2">
-                        <i data-lucide="graduation-cap" class="w-5 h-5 text-cyan-300"></i>
-                        Education
-                    </h3>
+    <div class="group fade-up">
+      <div class="flex items-baseline justify-between mb-6">
+        <h3 class="font-display text-xl text-ink">Video Systems &amp; Computer Vision</h3>
+        <span class="index-num">03</span>
+      </div>
+      <p class="text-sm text-ink-2 leading-relaxed mb-6">Comprehensive knowledge of video equipment, compression standards, and processing pipeline engineering. Experienced in computer vision, image manipulation, and 3D computer graphics.</p>
+      <div class="space-y-3">
+        <div><div class="flex justify-between text-xs text-ink-3 mb-1.5"><span>FFmpeg &amp; Video Processing</span><span>85%</span></div><div class="bar-track"><div class="bar-fill" style="width:85%"></div></div></div>
+        <div><div class="flex justify-between text-xs text-ink-3 mb-1.5"><span>Video Coding &amp; Codecs</span><span>80%</span></div><div class="bar-track"><div class="bar-fill" style="width:80%"></div></div></div>
+        <div><div class="flex justify-between text-xs text-ink-3 mb-1.5"><span>Computer Vision &amp; Segmentation</span><span>75%</span></div><div class="bar-track"><div class="bar-fill" style="width:75%"></div></div></div>
+        <div><div class="flex justify-between text-xs text-ink-3 mb-1.5"><span>Computer Graphics (Ray/Path Tracing)</span><span>70%</span></div><div class="bar-track"><div class="bar-fill" style="width:70%"></div></div></div>
+        <div><div class="flex justify-between text-xs text-ink-3 mb-1.5"><span>Video Equipment &amp; Systems</span><span>75%</span></div><div class="bar-track"><div class="bar-fill" style="width:75%"></div></div></div>
+      </div>
+    </div>
 
-                    <div class="cert-badge p-5 space-y-1">
-                        <div class="font-display font-bold text-slate-700 text-base">B.Eng. Audiovisual Systems Engineering</div>
-                        <div class="text-cyan-300 text-sm font-mono">Universitat Pompeu Fabra</div>
-                        <div class="text-slate-500 text-xs font-mono">2022 – 2026 · Barcelona, Poblenou</div>
-                    </div>
+    <div class="group fade-up delay-100">
+      <div class="flex items-baseline justify-between mb-6">
+        <h3 class="font-display text-xl text-ink">Dev Tools &amp; Environments</h3>
+        <span class="index-num">04</span>
+      </div>
+      <p class="text-sm text-ink-2 leading-relaxed mb-6">Hands-on use of version control, cloud platforms and enterprise tooling gained through academic projects and internship work at Avanade.</p>
+      <div class="space-y-3">
+        <div><div class="flex justify-between text-xs text-ink-3 mb-1.5"><span>Git Version Control</span><span>85%</span></div><div class="bar-track"><div class="bar-fill" style="width:85%"></div></div></div>
+        <div><div class="flex justify-between text-xs text-ink-3 mb-1.5"><span>Microsoft Power Apps</span><span>80%</span></div><div class="bar-track"><div class="bar-fill" style="width:80%"></div></div></div>
+        <div><div class="flex justify-between text-xs text-ink-3 mb-1.5"><span>Microsoft 365 Environment</span><span>82%</span></div><div class="bar-track"><div class="bar-fill" style="width:82%"></div></div></div>
+        <div><div class="flex justify-between text-xs text-ink-3 mb-1.5"><span>Agile / Scrum</span><span>74%</span></div><div class="bar-track"><div class="bar-fill" style="width:74%"></div></div></div>
+      </div>
+    </div>
+  </div>
 
-                    <div class="cert-badge p-5 space-y-1">
-                        <div class="font-display font-bold text-slate-700 text-base">Dual Baccalaureate</div>
-                        <div class="text-cyan-300 text-sm font-mono">La Salle Montcada</div>
-                        <div class="text-slate-500 text-xs font-mono">2020 – 2022 · Montcada i Reixac</div>
-                        <div class="text-slate-500 text-xs font-mono mt-1">Equivalent to US High School Diploma + Baccalaureate</div>
-                    </div>
+  <div class="mt-16 pt-10 rule fade-up">
+    <p class="eyebrow mb-4">Creative interests &amp; hobbies</p>
+    <div class="grid sm:grid-cols-4 gap-8">
+      <div><p class="font-display text-lg text-ink mb-1">Guitar</p><p class="text-xs text-ink-3">Playing in free time</p></div>
+      <div><p class="font-display text-lg text-ink mb-1">Composition</p><p class="text-xs text-ink-3">DAW production</p></div>
+      <div><p class="font-display text-lg text-ink mb-1">Cinema</p><p class="text-xs text-ink-3">Passion for film</p></div>
+      <div><p class="font-display text-lg text-ink mb-1">Basketball</p><p class="text-xs text-ink-3">Playing since age 6</p></div>
+    </div>
+  </div>
+</section>
 
-                    <div class="cert-badge p-5 space-y-1">
-                        <div class="font-display font-bold text-slate-700 text-base">Technological Baccalaureate</div>
-                        <div class="text-cyan-300 text-sm font-mono">La Salle Montcada</div>
-                        <div class="text-slate-500 text-xs font-mono">2020 – 2022 · Montcada i Reixac</div>
-                    </div>
+<!-- FEATURED / PERSONAL PROJECTS -->
+<section id="personal-projects" class="max-w-6xl mx-auto px-6 md:px-10 py-24 md:py-32 rule">
+  <div class="mb-16 fade-up">
+    <p class="eyebrow mb-4">Research &amp; development</p>
+    <h2 class="font-display text-ink text-4xl md:text-5xl leading-tight mb-4">Featured Projects</h2>
+    <p class="max-w-lg text-ink-2 text-sm leading-relaxed">My bachelor's thesis on audio forensics, plus a couple of personal tools I built out of curiosity for how sound and music actually work.</p>
+  </div>
 
-                    <div class="cert-badge p-5 space-y-1">
-                        <div class="font-display font-bold text-slate-700 text-base">ESO (Secondary Education)</div>
-                        <div class="text-cyan-300 text-sm font-mono">La Salle Montcada</div>
-                        <div class="text-slate-500 text-xs font-mono">2016 – 2020 · Montcada i Reixac</div>
-                    </div>
+  <!-- Thesis -->
+  <div class="panel flagship-frame p-8 md:p-12 mb-14 fade-up">
+    <div class="flex flex-wrap items-center gap-3 mb-6">
+      <span class="tag" style="border-color: var(--accent); color: var(--accent);">Flagship Project</span>
+      <span class="text-xs text-ink-3">Bachelor's Thesis · UPF 2025–2026</span>
+    </div>
+    <h3 class="font-display text-2xl md:text-3xl text-ink leading-snug mb-2">Robustness Evaluation of AI-Generated Music Detectors Based on Audio Encoder Features</h3>
+    <p class="text-xs text-ink-3 mb-8">Author: Arnau Martin Riera · Advisor: Martín Rocamora</p>
 
-                    <!-- Languages -->
-                    <h3 class="font-display font-bold text-xl text-slate-700 flex items-center gap-2 pt-4">
-                        <i data-lucide="globe" class="w-5 h-5 text-signal"></i>
-                        Languages
-                    </h3>
-
-                    <div class="cert-badge p-5 space-y-3">
-                        <div class="flex justify-between items-center">
-                            <span class="text-slate-700 font-display font-semibold text-sm">Catalan</span>
-                            <span class="pill text-xs">Native</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-slate-700 font-display font-semibold text-sm">Spanish</span>
-                            <span class="pill text-xs">Native</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-slate-700 font-display font-semibold text-sm">English</span>
-                            <span class="pill text-xs" style="background:rgba(47, 74, 99, 0.08);color:#2f4a63;border-color:rgba(47, 74, 99, 0.2)">C1 High Level</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Right: Work Experience -->
-                <div class="lg:col-span-2 fade-up">
-                    <h3 class="font-display font-bold text-xl text-slate-700 flex items-center gap-2 mb-8">
-                        <i data-lucide="briefcase" class="w-5 h-5 text-indigo-300"></i>
-                        Work Experience
-                    </h3>
-
-                    <div class="space-y-0 relative">
-                        <div class="absolute left-0 lg:left-8 top-0 bottom-0 w-px bg-gradient-to-b from-cyan-400/30 via-indigo-400/20 to-transparent hidden sm:block"></div>
-
-                        <!-- Avanade -->
-                        <div class="sm:pl-20 relative pb-10">
-                            <div class="hidden sm:flex absolute left-4 lg:left-4 top-1 w-8 h-8 rounded-full bg-white border-2 border-cyan-400 items-center justify-center">
-                                <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
-                            </div>
-                            <div class="cert-badge p-6 space-y-2">
-                                <div class="flex flex-wrap gap-4 items-start justify-between">
-                                    <div>
-                                        <div class="font-display font-bold text-slate-700 text-lg">Modern Workplace & Optimization Intern</div>
-                                        <div class="text-cyan-300 font-mono text-sm">Avanade · Barcelona</div>
-                                    </div>
-                                    <span class="pill text-xs">Oct 2025 – Present</span>
-                                </div>
-                                <p class="text-slate-600 text-sm leading-relaxed">Working with C#, JavaScript, and Power
-                                    Apps to build and optimise internal digital solutions. Supporting development,
-                                    testing, and improvement of Microsoft-based workplace tools. Gaining hands-on
-                                    experience with Agile methodologies in a global enterprise environment.</p>
-                                <div class="flex flex-wrap gap-2 pt-2">
-                                    <span class="tag">C#</span>
-                                    <span class="tag">JavaScript</span>
-                                    <span class="tag">Power Apps</span>
-                                    <span class="tag">Agile</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Bartender -->
-                        <div class="sm:pl-20 relative pb-10">
-                            <div class="hidden sm:flex absolute left-4 lg:left-4 top-1 w-8 h-8 rounded-full bg-white border-2 border-signal items-center justify-center">
-                                <span class="w-2 h-2 rounded-full bg-signal"></span>
-                            </div>
-                            <div class="cert-badge p-6 space-y-2">
-                                <div class="flex flex-wrap gap-4 items-start justify-between">
-                                    <div>
-                                        <div class="font-display font-bold text-slate-700 text-lg">Bartender</div>
-                                        <div class="font-mono text-sm text-signal">Costa Este – Shark Events · Barcelona</div>
-                                    </div>
-                                    <span class="pill text-xs">Jan – Aug 2025</span>
-                                </div>
-                                <p class="text-slate-600 text-sm leading-relaxed">Worked in a fast-paced events and
-                                    hospitality environment, developing customer service, teamwork and communication
-                                    skills under pressure. Complemented academic studies with real-world professional
-                                    experience.</p>
-                            </div>
-                        </div>
-
-                        <!-- Private Tutor -->
-                        <div class="sm:pl-20 relative pb-10">
-                            <div class="hidden sm:flex absolute left-4 lg:left-4 top-1 w-8 h-8 rounded-full bg-white border-2 border-indigo-400 items-center justify-center">
-                                <span class="w-2 h-2 rounded-full bg-indigo-400"></span>
-                            </div>
-                            <div class="cert-badge p-6 space-y-2">
-                                <div class="flex flex-wrap gap-4 items-start justify-between">
-                                    <div>
-                                        <div class="font-display font-bold text-slate-700 text-lg">Private Tutor</div>
-                                        <div class="text-indigo-300 font-mono text-sm">Self-employed · Montcada i Reixac</div>
-                                    </div>
-                                    <span class="pill text-xs">Apr 2020 – Aug 2024</span>
-                                </div>
-                                <p class="text-slate-600 text-sm leading-relaxed">Provided private tutoring for over 4
-                                    years while simultaneously studying. Developed strong communication, patience and
-                                    the ability to explain complex concepts clearly, skills that transfer directly to
-                                    technical collaboration and documentation.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+    <div class="grid md:grid-cols-5 gap-10">
+      <div class="md:col-span-3 space-y-6 text-sm leading-relaxed text-ink-2">
+        <div>
+          <p class="text-xs uppercase tracking-wide text-ink-3 mb-2">Context &amp; problem statement</p>
+          <p>The rise of generative platforms like Suno and Udio enables the creation of high-fidelity songs virtually indistinguishable to the human ear. However, neural codec-based decoders (such as Encodec) leave structural fingerprints: so-called "fakeprints" — replicas of upsampling operations and strided deconvolutions within the underlying CNNs.</p>
         </div>
-    </section>
-
-
-    <!-- CONTACT SECTION -->
-    <section id="contact" class="py-28 relative">
-        <div class="absolute inset-0 pointer-events-none"
-            style="background: radial-gradient(ellipse 60% 40% at 50% 100%, rgba(47, 74, 99, 0.05) 0%, transparent 70%);">
+        <p>While statistical detectors based on linear regressions or shallow models achieve 100% accuracy under laboratory conditions, this research exposes their systemic fragility. Detectors do not learn the abstract concept of "real" versus "artificial" music; they memorize the metric rigidity and exact placement of spectral peaks unique to each specific generation network.</p>
+        <div class="panel-inset panel p-5">
+          <p class="text-xs uppercase tracking-wide text-ink-3 mb-3">Mathematical foundation of the artifact</p>
+          <p class="font-mono text-xs text-ink mb-2">n · fs &nbsp; for integer bins &nbsp; n ∈ [0, ⌊k/2⌋]</p>
+          <p class="text-xs text-ink-2 mb-3">In a deconvolution layer with stride <em>k</em>, zero-upsampling periodizes the spectrum, introducing narrow peaks at equidistant frequencies.</p>
+          <p class="font-mono text-xs text-ink">⌊Pmax/2⌋ + 1, &nbsp; where &nbsp; Pmax = ∏ k(i)</p>
+          <p class="text-xs text-ink-2 mt-3">Chaining layers grows the maximum number of resulting spectral peaks recursively. Temporal averaging of the STFT across thousands of frames cancels this signature, exposing the source architecture.</p>
         </div>
-
-        <div class="max-w-4xl mx-auto px-6 lg:px-10">
-
-            <div class="fade-up text-center mb-16 space-y-4">
-                <div class="section-label">Let's work together</div>
-                <h2 class="font-display font-extrabold text-4xl lg:text-5xl text-slate-700">
-                    Get in <span class="gradient-text">Touch</span>
-                </h2>
-                <p class="text-slate-500 max-w-xl mx-auto text-lg">
-                    Whether you have an opportunity, a collaboration idea, or just want to talk about audio, film or
-                    tech, I'm always happy to connect.
-                </p>
-            </div>
-
-            <div class="grid lg:grid-cols-5 gap-10">
-                <!-- Contact form -->
-                <div class="lg:col-span-3 fade-up">
-                    <div class="card p-8 space-y-5">
-                        <div class="grid sm:grid-cols-2 gap-4">
-                            <div class="space-y-2">
-                                <label class="text-xs font-mono text-slate-500 uppercase tracking-widest">Name</label>
-                                <input type="text" class="input-field" placeholder="Your name">
-                            </div>
-                            <div class="space-y-2">
-                                <label class="text-xs font-mono text-slate-500 uppercase tracking-widest">Email</label>
-                                <input type="email" class="input-field" placeholder="your@email.com">
-                            </div>
-                        </div>
-                        <div class="space-y-2">
-                            <label class="text-xs font-mono text-slate-500 uppercase tracking-widest">Subject</label>
-                            <input type="text" class="input-field"
-                                placeholder="Job opportunity · Collaboration · Just saying hi...">
-                        </div>
-                        <div class="space-y-2">
-                            <label class="text-xs font-mono text-slate-500 uppercase tracking-widest">Message</label>
-                            <textarea class="input-field resize-none h-32"
-                                placeholder="Tell me about your project or idea..."></textarea>
-                        </div>
-                        <button class="btn-cyan w-full py-3 inline-flex items-center justify-center gap-2">
-                            <i data-lucide="send" class="w-4 h-4"></i>
-                            Send Message
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Social / contact links -->
-                <div class="lg:col-span-2 space-y-5 fade-up">
-                    <h3 class="font-display font-bold text-lg text-slate-700">Direct contact</h3>
-
-                    <a href="https://www.linkedin.com/in/arnaumartinriera" target="_blank" rel="noopener"
-                        class="flex items-center gap-4 p-4 cert-badge hover:border-cyan-400/40 transition-all group">
-                        <div class="p-2 rounded-lg bg-cyan-400/10">
-                            <svg class="w-5 h-5 text-cyan-300" fill="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                            </svg>
-                        </div>
-                        <div>
-                            <div class="font-display font-semibold text-slate-700 text-sm">LinkedIn</div>
-                            <div class="text-slate-500 text-xs font-mono">linkedin.com/in/arnaumartinriera</div>
-                        </div>
-                        <i data-lucide="arrow-right"
-                            class="w-4 h-4 text-slate-400 ml-auto group-hover:text-cyan-300 transition-colors"></i>
-                    </a>
-
-                    <a href="https://github.com/arnaumartin10" target="_blank" rel="noopener"
-                        class="flex items-center gap-4 p-4 cert-badge hover:border-indigo-400/40 transition-all group">
-                        <div class="p-2 rounded-lg bg-indigo-400/10">
-                            <svg class="w-5 h-5 text-indigo-300" fill="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                            </svg>
-                        </div>
-                        <div>
-                            <div class="font-display font-semibold text-slate-700 text-sm">GitHub</div>
-                            <div class="text-slate-500 text-xs font-mono">github.com/arnaumartin10</div>
-                        </div>
-                        <i data-lucide="arrow-right"
-                            class="w-4 h-4 text-slate-400 ml-auto group-hover:text-indigo-300 transition-colors"></i>
-                    </a>
-
-                    <a href="https://github.com/arnaumartin1" target="_blank" rel="noopener"
-                        class="flex items-center gap-4 p-4 cert-badge hover:border-indigo-400/40 transition-all group">
-                        <div class="p-2 rounded-lg bg-indigo-400/10">
-                            <svg class="w-5 h-5 text-indigo-300" fill="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                            </svg>
-                        </div>
-                        <div>
-                            <div class="font-display font-semibold text-slate-700 text-sm">GitHub (Uni Account)</div>
-                            <div class="text-slate-500 text-xs font-mono">github.com/arnaumartin1</div>
-                        </div>
-                        <i data-lucide="arrow-right"
-                            class="w-4 h-4 text-slate-400 ml-auto group-hover:text-indigo-300 transition-colors"></i>
-                    </a>
-
-                    <a href="mailto:amartinriera@gmail.com"
-                        class="flex items-center gap-4 p-4 cert-badge hover:border-signal/40 transition-all group">
-                        <div class="p-2 rounded-lg bg-signal/10">
-                            <i data-lucide="mail" class="w-5 h-5 text-signal"></i>
-                        </div>
-                        <div>
-                            <div class="font-display font-semibold text-white text-sm">Email</div>
-                            <div class="text-slate-500 text-xs font-mono">amartinriera@gmail.com</div>
-                        </div>
-                        <i data-lucide="arrow-right"
-                            class="w-4 h-4 text-slate-400 ml-auto group-hover:text-signal transition-colors"></i>
-                    </a>
-
-                    <a href="tel:+34670054307"
-                        class="flex items-center gap-4 p-4 cert-badge hover:border-yellow-400/40 transition-all group">
-                        <div class="p-2 rounded-lg bg-yellow-400/10">
-                            <i data-lucide="phone" class="w-5 h-5 text-yellow-400"></i>
-                        </div>
-                        <div>
-                            <div class="font-display font-semibold text-slate-700 text-sm">Phone</div>
-                            <div class="text-slate-500 text-xs font-mono">+34 670 054 307</div>
-                        </div>
-                        <i data-lucide="arrow-right"
-                            class="w-4 h-4 text-slate-400 ml-auto group-hover:text-yellow-400 transition-colors"></i>
-                    </a>
-
-                    <div class="flex items-center gap-3 px-2 pt-2">
-                        <i data-lucide="map-pin" class="w-4 h-4 text-slate-400"></i>
-                        <span class="text-slate-500 text-sm font-mono">Barcelona, Catalunya</span>
-                    </div>
-                </div>
-            </div>
+        <div>
+          <p class="text-xs uppercase tracking-wide text-ink-3 mb-2">Multiband degradation pipeline</p>
+          <p class="mb-2">As the primary contribution of this thesis, a post-processing pipeline was designed around the Overlap-Add (OLA) method combined with phase perturbations via millisecond block micro-shifts.</p>
+          <ul class="space-y-1.5 pl-4" style="list-style: none;">
+            <li class="flex gap-2"><span class="text-accent">—</span><span><strong class="text-ink">Multiband decomposition:</strong> the signal is split into two bands using a fixed cutoff of 4000 Hz.</span></li>
+            <li class="flex gap-2"><span class="text-accent">—</span><span><strong class="text-ink">Micro-timing displacements:</strong> random, asynchronous phase perturbations applied exclusively to the mid-high band, disrupting the temporal spectral grid without compromising musical dynamics.</span></li>
+          </ul>
         </div>
-    </section>
+      </div>
 
-
-    <!-- FOOTER -->
-    <footer class="border-t border-slate-200 py-10">
-        <div class="max-w-7xl mx-auto px-6 lg:px-10 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div class="font-display font-extrabold text-sm flex items-center gap-2">
-                <span class="font-mono text-cyan-300 text-xs">&lt;</span>
-                <span class="text-slate-700">AV</span><span class="text-glow">·</span><span
-                    class="text-slate-700">SYS</span>
-                <span class="font-mono text-cyan-300 text-xs">/&gt;</span>
-            </div>
-
-            <div class="text-slate-500 text-xs font-mono">
-                © 2026 Arnau Martin Riera — Audiovisual Systems Engineer
-            </div>
-
-            <div class="text-slate-500 text-xs font-mono flex items-center gap-1">
-                Designed with
-                <i data-lucide="heart" class="w-3 h-3 text-cyan-300 inline"></i>
-                in Barcelona
-            </div>
+      <div class="md:col-span-2">
+        <div class="grid grid-cols-2 gap-4 mb-4">
+          <div class="panel-inset panel p-5">
+            <p class="font-display text-2xl text-ink">100 → 0%</p>
+            <p class="text-xs text-ink-3 mt-1">Detector accuracy (Suno)</p>
+          </div>
+          <div class="panel-inset panel p-5">
+            <p class="font-display text-2xl text-ink">100 → 4%</p>
+            <p class="text-xs text-ink-3 mt-1">Detector accuracy (Udio)</p>
+          </div>
+          <div class="panel-inset panel p-5">
+            <p class="font-display text-2xl text-ink">53.3%</p>
+            <p class="text-xs text-ink-3 mt-1">Human success (chance)</p>
+          </div>
+          <div class="panel-inset panel p-5">
+            <p class="font-display text-2xl text-ink">3.82 / 5</p>
+            <p class="text-xs text-ink-3 mt-1">Human Likert difficulty</p>
+          </div>
         </div>
-    </footer>
+        <div class="panel-inset panel p-5 mb-6">
+          <p class="text-xs uppercase tracking-wide text-ink-3 mb-2">Research conclusion</p>
+          <p class="text-sm text-ink-2 leading-relaxed">Results from a perceptual test with N = 20 listeners conclusively demonstrate that micro-timing alterations and phase decomposition are completely transparent to the human ear — opening a critical debate about the reliability of current spectral-architecture-based detectors against adversarial attacks.</p>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <span class="tag">Audio Signal Processing</span>
+          <span class="tag">Fakeprints</span>
+          <span class="tag">Overlap-Add (OLA)</span>
+          <span class="tag">STFT &amp; Fourier Theory</span>
+          <span class="tag">Psychoacoustics</span>
+          <span class="tag">Adversarial Robustness</span>
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <div class="grid md:grid-cols-2 gap-8">
+    <div class="panel p-8 fade-up">
+      <div class="flex items-center justify-between mb-5">
+        <span class="text-xs text-ink-3">01 / 02 · Side Project</span>
+      </div>
+      <h3 class="font-display text-2xl text-ink mb-4">fixyoursound</h3>
+      <p class="text-sm text-ink-2 leading-relaxed mb-6">Started as a quick vibe-coding experiment and grew into a full-stack tool for learning music production. It doesn't generate a finished track, it uses an LLM as a live tutor: you describe what you want in plain language, and it walks you through the synthesis, composition and rhythm decisions behind it, in the browser.</p>
+      <ul class="space-y-4 text-sm mb-6">
+        <li><p class="text-ink font-medium mb-1">Sound Replicator</p><p class="text-ink-2 leading-relaxed">Describe a sound in plain English and it works backward to a synthesis patch, oscillators, ADSR, LFO routing, filters, rendered live with the Web Audio API.</p></li>
+        <li><p class="text-ink font-medium mb-1">Interactive Beat Maker &amp; Chord Architect</p><p class="text-ink-2 leading-relaxed">Turns a text prompt into a full MIDI sequence played back on a step sequencer and piano roll, with a short breakdown of the music theory behind it.</p></li>
+        <li><p class="text-ink font-medium mb-1">Collaborative community</p><p class="text-ink-2 leading-relaxed">A social layer built with Prisma, Supabase and NextAuth, where producers share prompts and patches.</p></li>
+      </ul>
+      <div class="flex flex-wrap gap-2 mb-6">
+        <span class="tag">AI / LLMs</span><span class="tag">Next.js 15</span><span class="tag">Web Audio API</span><span class="tag">Prisma &amp; Supabase</span>
+      </div>
+      <a href="https://fixyoursound.vercel.app/" target="_blank" class="btn btn-ghost inline-block px-5 py-2.5">Visit Web →</a>
+    </div>
 
-    <!-- JAVASCRIPT -->
-    <script>
-        lucide.createIcons();
+    <div class="panel p-8 fade-up delay-100">
+      <div class="flex items-center justify-between mb-5">
+        <span class="text-xs text-ink-3">02 / 02 · Audio Engineering</span>
+      </div>
+      <h3 class="font-display text-2xl text-ink mb-4">easySynth</h3>
+      <p class="text-sm text-ink-2 leading-relaxed mb-6">Built to properly understand synthesis from first principles; a compact, browser-based synthesizer that makes oscillators, envelopes and signal flow visible and tweakable in real time.</p>
+      <div class="mb-6">
+        <p class="text-ink font-medium mb-1 text-sm">Native MIDI controller support</p>
+        <p class="text-ink-2 leading-relaxed text-sm">Allows users to map and plug in real external hardware directly into the browser pipeline.</p>
+      </div>
+      <div class="flex flex-wrap gap-2 mb-6">
+        <span class="tag">Web Audio API</span><span class="tag">Synthesizers</span><span class="tag">MIDI Protocol</span><span class="tag">JavaScript</span>
+      </div>
+      <a href="https://arnaumartin10.github.io/easySynth/" target="_blank" class="btn btn-ghost inline-block px-5 py-2.5">Open Synth →</a>
+    </div>
+  </div>
+</section>
 
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 40) {
-                navbar.classList.add('nav-scrolled');
-            } else {
-                navbar.classList.remove('nav-scrolled');
-            }
+<!-- ACADEMIC PROJECTS SLIDER -->
+<section id="academic-projects" class="py-24 md:py-32 rule">
+  <div class="max-w-6xl mx-auto px-6 md:px-10 flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14 fade-up">
+    <div>
+      <p class="eyebrow mb-4">University work</p>
+      <h2 class="font-display text-ink text-4xl md:text-5xl leading-tight">Academic Projects</h2>
+    </div>
+    <p class="max-w-sm text-ink-2 text-sm leading-relaxed">A selection of coursework spanning audiovisual systems, software engineering, and multimedia pipelines. Drag or use the arrows to browse.</p>
+  </div>
+
+  <div class="max-w-6xl mx-auto px-6 md:px-10 flex items-center justify-end gap-3 mb-6 fade-up">
+    <button id="proj-prev" class="btn-icon panel w-10 h-10 flex items-center justify-center rounded-full" aria-label="Previous">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button id="proj-next" class="btn-icon panel w-10 h-10 flex items-center justify-center rounded-full" aria-label="Next">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+
+  <div id="proj-track" class="flex gap-6 overflow-x-auto px-6 md:px-10 pb-4" style="scroll-snap-type: x mandatory;">
+
+    <div class="slide-card panel p-7 flex-shrink-0" style="width: min(88vw, 380px);">
+      <span class="index-num">01 / 07</span>
+      <h3 class="font-display text-xl text-ink mt-3 mb-1">Birdify</h3>
+      <p class="text-xs text-ink-3 mb-4">Bird Sound Classifier using ML · Mar–Jun 2025 · UPF</p>
+      <p class="text-sm text-ink-2 leading-relaxed mb-5">A machine learning application that classifies bird species from their sounds, developed for the Musical Technology Workshop course.</p>
+      <div class="grid grid-cols-2 gap-3 text-xs mb-5">
+        <div><p class="text-ink-3">Feature extraction</p><p class="text-ink font-medium">MFCCs</p></div>
+        <div><p class="text-ink-3">Models trained</p><p class="text-ink font-medium">KNN · SVM · CNN</p></div>
+        <div><p class="text-ink-3">Preprocessing</p><p class="text-ink font-medium">Denoising · Segmentation</p></div>
+        <div><p class="text-ink-3">Deployment</p><p class="text-ink font-medium">Streamlit App</p></div>
+      </div>
+      <div class="flex flex-wrap gap-2 mb-5"><span class="tag">Python</span><span class="tag">ML</span><span class="tag">DSP</span></div>
+      <a href="https://github.com/XavierRiera/Birdify" target="_blank" class="text-sm text-accent font-medium">GitHub →</a>
+    </div>
+
+    <div class="slide-card panel p-7 flex-shrink-0" style="width: min(88vw, 380px);">
+      <span class="index-num">02 / 07</span>
+      <h3 class="font-display text-xl text-ink mt-3 mb-1">Medical Image Volume Rendering</h3>
+      <p class="text-xs text-ink-3 mb-4">3D Scientific Visualization · Oct–Dec 2025 · UPF, Group Project</p>
+      <p class="text-sm text-ink-2 leading-relaxed mb-5">Built for the Computer Graphics course — a visualization tool that processes raw 3D medical datasets using ray casting, transfer functions, and optimized rendering structures.</p>
+      <div class="grid grid-cols-2 gap-2 mb-5">
+        <img src="images/vr1.png" alt="Volume Rendering 1" class="rounded-sm w-full h-20 object-cover">
+        <img src="images/vr2.png" alt="Volume Rendering 2" class="rounded-sm w-full h-20 object-cover">
+      </div>
+      <div class="flex flex-wrap gap-2"><span class="tag">Computer Graphics</span><span class="tag">Ray Casting</span><span class="tag">3D Visualization</span></div>
+    </div>
+
+    <div class="slide-card panel p-7 flex-shrink-0" style="width: min(88vw, 380px);">
+      <span class="index-num">03 / 07</span>
+      <h3 class="font-display text-xl text-ink mt-3 mb-1">Star Diaries: Chapter VII</h3>
+      <p class="text-xs text-ink-3 mb-4">Narrative Puzzle Game · Jan–Mar 2026 · UPF</p>
+      <p class="text-sm text-ink-2 leading-relaxed mb-5">Inspired by the science fiction of Stanisław Lem. Players navigate a temporal loop aboard a failing spaceship, solving failures through environmental storytelling.</p>
+      <div class="grid grid-cols-2 gap-3 text-xs mb-5">
+        <div><p class="text-ink-3">Inspiration</p><p class="text-ink font-medium">Stanisław Lem</p></div>
+        <div><p class="text-ink-3">Mechanic</p><p class="text-ink font-medium">Temporal Loop</p></div>
+      </div>
+      <div class="flex flex-wrap gap-2 mb-5"><span class="tag">Game Design</span><span class="tag">Narrative Design</span></div>
+      <a href="https://github.com/byEriK12/Star-Diaries---Chapter-VII/releases" target="_blank" class="text-sm text-accent font-medium">Download →</a>
+    </div>
+
+    <div class="slide-card panel p-7 flex-shrink-0" style="width: min(88vw, 380px);">
+      <span class="index-num">04 / 07</span>
+      <h3 class="font-display text-xl text-ink mt-3 mb-1">Audiovisual Pipeline &amp; Music Video</h3>
+      <p class="text-xs text-ink-3 mb-4">Creative Video Systems Engineering · Jan–Apr 2026 · UPF, Final Project</p>
+      <p class="text-sm text-ink-2 leading-relaxed mb-5">A capstone for Video Systems and Equipment mastering the end-to-end production pipeline, studio/field gear, routing, mastering, and a fully produced music video as final thesis.</p>
+      <div class="flex flex-wrap gap-2"><span class="tag">Video Systems</span><span class="tag">Post-Production</span><span class="tag">Encoding</span></div>
+    </div>
+
+    <div class="slide-card panel p-7 flex-shrink-0" style="width: min(88vw, 380px);">
+      <span class="index-num">05 / 07</span>
+      <h3 class="font-display text-xl text-ink mt-3 mb-1">INCASÒL System Migration</h3>
+      <p class="text-xs text-ink-3 mb-4">Consortium Management System Design · Oct–Dec 2025 · UPF</p>
+      <p class="text-sm text-ink-2 leading-relaxed mb-5">A real-world consulting project with INCASÒL (Catalan housing agency). Designed a new data map architecture to migrate an obsolete Access database to OutSystems, with weekly client feedback loops.</p>
+      <div class="flex flex-wrap gap-2"><span class="tag">OutSystems</span><span class="tag">IT Project Mgmt</span><span class="tag">Agile</span></div>
+    </div>
+
+    <div class="slide-card panel p-7 flex-shrink-0" style="width: min(88vw, 380px);">
+      <span class="index-num">06 / 07</span>
+      <h3 class="font-display text-xl text-ink mt-3 mb-1">SOUNDreview</h3>
+      <p class="text-xs text-ink-3 mb-4">Music Discovery &amp; Review Platform · Apr–Jun 2023 · UPF</p>
+      <p class="text-sm text-ink-2 leading-relaxed mb-5">Built for Data Structures and Algorithms II . A "Letterboxd for music" optimized for efficient indexing, fast search, and complex relational mappings.</p>
+      <div class="flex flex-wrap gap-2 mb-5"><span class="tag">Data Structures</span><span class="tag">Java / OOP</span></div>
+      <a href="https://github.com/arnaumartin1/SoundReview" target="_blank" class="text-sm text-accent font-medium">GitHub →</a>
+    </div>
+
+    <div class="slide-card panel p-7 flex-shrink-0" style="width: min(88vw, 380px);">
+      <span class="index-num">07 / 07</span>
+      <h3 class="font-display text-xl text-ink mt-3 mb-1">KidConnect</h3>
+      <p class="text-xs text-ink-3 mb-4">Childcare Professional Marketplace · Feb–Jun 2024 · UPF</p>
+      <p class="text-sm text-ink-2 leading-relaxed mb-5">A secure marketplace connecting parents with verified childcare specialists, built for Software Engineering with strict adherence to architectural patterns and design principles.</p>
+      <div class="flex flex-wrap gap-2 mb-5"><span class="tag">Software Engineering</span><span class="tag">Design Patterns</span></div>
+      <a href="https://github.com/arnaumartin1/KidConnect" target="_blank" class="text-sm text-accent font-medium">GitHub →</a>
+    </div>
+  </div>
+
+  <div id="proj-dots" class="flex items-center justify-center gap-2 mt-8"></div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" class="max-w-6xl mx-auto px-6 md:px-10 py-24 md:py-32 rule">
+  <p class="eyebrow mb-4 fade-up">Background &amp; training</p>
+  <h2 class="font-display text-ink text-4xl md:text-5xl leading-tight mb-16 fade-up">Experience &amp; Education</h2>
+
+  <div class="grid md:grid-cols-2 gap-16">
+    <div class="fade-up">
+      <h3 class="font-display text-xl text-ink mb-8">Education</h3>
+      <div class="space-y-8">
+        <div class="pl-5 border-l-2" style="border-color: var(--accent);">
+          <p class="text-ink font-medium">B.Eng. Audiovisual Systems Engineering</p>
+          <p class="text-sm text-ink-2 mb-1">Universitat Pompeu Fabra</p>
+          <p class="text-xs text-ink-3">2022 – 2026 · Barcelona, Poblenou</p>
+        </div>
+        <div class="pl-5 border-l-2 border-[var(--line-strong)]">
+          <p class="text-ink font-medium">Dual Baccalaureate</p>
+          <p class="text-sm text-ink-2 mb-1">La Salle Montcada</p>
+          <p class="text-xs text-ink-3">2020 – 2022 · Equivalent to US High School Diploma + Baccalaureate</p>
+        </div>
+        <div class="pl-5 border-l-2 border-[var(--line-strong)]">
+          <p class="text-ink font-medium">Technological Baccalaureate</p>
+          <p class="text-sm text-ink-2 mb-1">La Salle Montcada</p>
+          <p class="text-xs text-ink-3">2020 – 2022 · Montcada i Reixac</p>
+        </div>
+        <div class="pl-5 border-l-2 border-[var(--line-strong)]">
+          <p class="text-ink font-medium">ESO (Secondary Education)</p>
+          <p class="text-sm text-ink-2 mb-1">La Salle Montcada</p>
+          <p class="text-xs text-ink-3">2016 – 2020 · Montcada i Reixac</p>
+        </div>
+      </div>
+
+      <h3 class="font-display text-xl text-ink mb-6 mt-14">Languages</h3>
+      <div class="flex flex-wrap gap-2">
+        <span class="tag">Catalan — Native</span>
+        <span class="tag">Spanish — Native</span>
+        <span class="tag">English — C1</span>
+      </div>
+    </div>
+
+    <div class="fade-up delay-100">
+      <h3 class="font-display text-xl text-ink mb-8">Work Experience</h3>
+      <div class="space-y-8">
+        <div class="pl-5 border-l-2" style="border-color: var(--accent);">
+          <p class="text-ink font-medium">Junior Analyst — Modern Workplace</p>
+          <p class="text-sm text-ink-2 mb-1">Avanade · Barcelona</p>
+          <p class="text-xs text-ink-3 mb-3">Jul 2026 – Present</p>
+          <p class="text-sm text-ink-2 leading-relaxed">Promoted into a full analyst role after my internship. I handle day-to-day ticket resolution within a Microsoft environment (M365 and Power Platform), working directly with international clients in English.</p>
+        </div>
+        <div class="pl-5 border-l-2 border-[var(--line-strong)]">
+          <p class="text-ink font-medium">Modern Workplace &amp; Optimization Intern</p>
+          <p class="text-sm text-ink-2 mb-1">Avanade · Barcelona</p>
+          <p class="text-xs text-ink-3 mb-3">Oct 2025 – Jun 2026</p>
+          <p class="text-sm text-ink-2 leading-relaxed">Worked with C#, JavaScript, and Power Apps to build and optimize internal digital solutions, gaining hands-on experience with Agile methodologies in a global enterprise environment.</p>
+        </div>
+        <div class="pl-5 border-l-2 border-[var(--line-strong)]">
+          <p class="text-ink font-medium">Bartender</p>
+          <p class="text-sm text-ink-2 mb-1">Costa Este – Shark Events · Barcelona</p>
+          <p class="text-xs text-ink-3 mb-3">Jan – Aug 2025</p>
+          <p class="text-sm text-ink-2 leading-relaxed">Worked in a fast-paced events and hospitality environment, developing customer service, teamwork, and communication under pressure.</p>
+        </div>
+        <div class="pl-5 border-l-2 border-[var(--line-strong)]">
+          <p class="text-ink font-medium">Private Tutor</p>
+          <p class="text-sm text-ink-2 mb-1">Self-employed · Montcada i Reixac</p>
+          <p class="text-xs text-ink-3 mb-3">Apr 2020 – Aug 2024</p>
+          <p class="text-sm text-ink-2 leading-relaxed">Provided private tutoring for over four years while studying, developing patience and the ability to explain complex concepts clearly.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="max-w-6xl mx-auto px-6 md:px-10 py-24 md:py-32 rule">
+  <div class="grid md:grid-cols-2 gap-16">
+    <div class="fade-up">
+      <p class="eyebrow mb-4">Let's work together</p>
+      <h2 class="font-display text-ink text-4xl md:text-5xl leading-tight mb-6">Get in Touch</h2>
+      <p class="text-ink-2 leading-relaxed mb-10 max-w-md">If you've got an opportunity, a project, or just want to talk about audio, film or tech — send me a message.</p>
+
+      <div class="space-y-4 mb-10">
+        <p class="text-sm text-ink"><span class="text-ink-3">Email · </span><a href="mailto:amartinriera@gmail.com" class="font-medium hover:text-accent transition-colors">amartinriera@gmail.com</a></p>
+        <p class="text-sm text-ink"><span class="text-ink-3">Phone · </span><a href="tel:+34670054307" class="font-medium hover:text-accent transition-colors">+34 670 054 307</a></p>
+      </div>
+
+      <p class="text-xs uppercase tracking-wide text-ink-3 mb-4">Find me elsewhere</p>
+      <div class="flex items-center gap-3">
+        <a href="https://www.linkedin.com/in/arnaumartinriera" target="_blank" aria-label="LinkedIn" title="LinkedIn" class="icon-link">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.03-1.85-3.03-1.86 0-2.14 1.45-2.14 2.94v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.61 0 4.28 2.38 4.28 5.47v6.27zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+        </a>
+        <a href="https://github.com/arnaumartin10" target="_blank" aria-label="GitHub" title="GitHub" class="icon-link">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-1.04-.01-1.88-2.78.63-3.37-1.22-3.37-1.22-.45-1.19-1.11-1.5-1.11-1.5-.9-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.9 1.58 2.35 1.12 2.92.86.09-.67.35-1.12.64-1.38-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.31.1-2.73 0 0 .84-.28 2.75 1.05a9.29 9.29 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.42.2 2.47.1 2.73.64.72 1.03 1.63 1.03 2.75 0 3.93-2.35 4.8-4.58 5.05.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.26 10.26 0 0 0 22 12.25C22 6.58 17.52 2 12 2z"/></svg>
+        </a>
+        <a href="https://github.com/arnaumartin1" target="_blank" aria-label="GitHub (University account)" title="GitHub (University account)" class="icon-link">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-1.04-.01-1.88-2.78.63-3.37-1.22-3.37-1.22-.45-1.19-1.11-1.5-1.11-1.5-.9-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.9 1.58 2.35 1.12 2.92.86.09-.67.35-1.12.64-1.38-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.31.1-2.73 0 0 .84-.28 2.75 1.05a9.29 9.29 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.42.2 2.47.1 2.73.64.72 1.03 1.63 1.03 2.75 0 3.93-2.35 4.8-4.58 5.05.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.26 10.26 0 0 0 22 12.25C22 6.58 17.52 2 12 2z"/></svg>
+        </a>
+        <a href="mailto:amartinriera@gmail.com" aria-label="Email" title="Email" class="icon-link">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18v12H3z"/><path d="M3 7l9 6 9-6"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="fade-up delay-100">
+      <form id="contact-form" action="https://formsubmit.co/amartinriera@gmail.com" method="POST" class="panel p-8">
+        <!-- FormSubmit config: sends directly to the email above, no backend required -->
+        <input type="hidden" name="_subject" value="New message from your portfolio">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="text" name="_honey" style="display:none">
+
+        <div class="mb-5">
+          <label for="name" class="block text-xs uppercase tracking-wide text-ink-3 mb-2">Name</label>
+          <input id="name" name="name" type="text" required class="input-field" placeholder="Your name">
+        </div>
+        <div class="mb-5">
+          <label for="email" class="block text-xs uppercase tracking-wide text-ink-3 mb-2">Email</label>
+          <input id="email" name="email" type="email" required class="input-field" placeholder="you@email.com">
+        </div>
+        <div class="mb-5">
+          <label for="subject" class="block text-xs uppercase tracking-wide text-ink-3 mb-2">Subject</label>
+          <input id="subject" name="subject" type="text" class="input-field" placeholder="What's this about?">
+        </div>
+        <div class="mb-6">
+          <label for="message" class="block text-xs uppercase tracking-wide text-ink-3 mb-2">Message</label>
+          <textarea id="message" name="message" rows="5" required class="input-field" placeholder="Tell me a bit more..."></textarea>
+        </div>
+        <button id="submit-btn" type="submit" class="btn btn-primary w-full py-3.5">Send Message</button>
+        <p class="text-xs text-ink-3 mt-3">Sent directly to my inbox. The first time you write, FormSubmit may ask you to confirm delivery — that's normal and only happens once.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="max-w-6xl mx-auto px-6 md:px-10 py-10 rule flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-ink-3">
+  <p class="font-display italic text-ink">AV·SYS</p>
+  <p>© 2026 Arnau Martin Riera — Audiovisual Systems Engineer</p>
+</footer>
+
+<script>
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Scroll progress bar
+  const progressBar = document.getElementById('scroll-progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+    progressBar.style.width = scrolled + '%';
+  });
+
+  // Navbar background on scroll
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 40) navbar.classList.add('nav-scrolled');
+    else navbar.classList.remove('nav-scrolled');
+  });
+
+  // Mobile menu
+  const toggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  toggle.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+  mobileMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => mobileMenu.classList.remove('open'));
+  });
+
+  // Smooth anchor scrolling
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // Fade-up reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Skill bar fill animation
+  const barObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.bar-fill').forEach(bar => {
+          const w = bar.style.width;
+          bar.style.width = '0';
+          requestAnimationFrame(() => setTimeout(() => { bar.style.width = w; }, 100));
         });
+      }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.group').forEach(card => barObserver.observe(card));
 
-        const toggle = document.getElementById('menu-toggle');
-        const mobileMenu = document.getElementById('mobile-menu');
-        toggle.addEventListener('click', () => {
-            mobileMenu.classList.toggle('open');
-        });
-        mobileMenu.querySelectorAll('a').forEach(a => {
-            a.addEventListener('click', () => mobileMenu.classList.remove('open'));
-        });
+  // Nav scrollspy
+  const navLinks = document.querySelectorAll('.nav-link');
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navLinks.forEach(link => { link.classList.toggle('active', link.dataset.section === id); });
+      }
+    });
+  }, { threshold: 0.5 });
+  ['skills', 'personal-projects', 'experience'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) sectionObserver.observe(el);
+  });
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.08 });
+  // Academic projects slider
+  const track = document.getElementById('proj-track');
+  const dotsWrap = document.getElementById('proj-dots');
+  const slides = track ? Array.from(track.children) : [];
+  if (track && slides.length) {
+    slides.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.className = 'proj-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', 'Go to project ' + (i + 1));
+      dot.addEventListener('click', () => {
+        slides[i].scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+      });
+      dotsWrap.appendChild(dot);
+    });
+    const dots = Array.from(dotsWrap.children);
+    const slideObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const idx = slides.indexOf(entry.target);
+        if (entry.isIntersecting && entry.intersectionRatio > 0.55) {
+          dots.forEach(d => d.classList.remove('active'));
+          if (dots[idx]) dots[idx].classList.add('active');
+        }
+      });
+    }, { root: track, threshold: [0.55] });
+    slides.forEach(s => slideObserver.observe(s));
 
-        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    const scrollByCard = (dir) => {
+      const card = slides[0];
+      const style = getComputedStyle(track);
+      const gap = parseFloat(style.columnGap || style.gap || '24');
+      const amount = card.getBoundingClientRect().width + gap;
+      track.scrollBy({ left: dir * amount, behavior: 'smooth' });
+    };
+    document.getElementById('proj-prev').addEventListener('click', () => scrollByCard(-1));
+    document.getElementById('proj-next').addEventListener('click', () => scrollByCard(1));
+  }
 
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    e.preventDefault();
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
-        });
+  // Contact form — real submission via FormSubmit (AJAX), with inline feedback
+  const form = document.getElementById('contact-form');
+  const submitBtn = document.getElementById('submit-btn');
+  const toast = document.getElementById('toast');
 
-        const barObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.querySelectorAll('.bar-fill').forEach(bar => {
-                        const w = bar.style.width;
-                        bar.style.width = '0';
-                        requestAnimationFrame(() => {
-                            setTimeout(() => { bar.style.width = w; }, 100);
-                        });
-                    });
-                }
-            });
-        }, { threshold: 0.3 });
+  function showToast(msg, isError) {
+    toast.textContent = msg;
+    toast.style.borderColor = isError ? '#a8452e' : 'var(--line)';
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 4500);
+  }
 
-        document.querySelectorAll('.card').forEach(card => barObserver.observe(card));
-    </script>
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const original = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
+
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        showToast('Message sent — thanks, I\'ll get back to you soon.', false);
+        form.reset();
+      } else {
+        throw new Error('Request failed');
+      }
+    } catch (err) {
+      showToast('Something went wrong. Try emailing me directly instead.', true);
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = original;
+    }
+  });
+</script>
+
 </body>
-
 </html>
